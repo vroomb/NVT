@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
+import NVTModule
 
 AbstractButton {
     id: root

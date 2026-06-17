@@ -3,13 +3,13 @@
         <file>res/svg/blue_arrow.svg</file>
         <file>res/svg/lavender_arrow.svg</file>
         <file>res/svg/yellow_arrow.svg</file>
-        <file>src/main.qml</file>
-        <file>src/launch/launch.qml</file>
-        <file>src/shared/MetroButton.qml</file>
-        <file>src/shared/MetroContextMenu.qml</file>
-        <file>src/shared/Station.qml</file>
-        <file>src/shared/StationLabel.qml</file>
-        <file>src/timeline/timeline.qml</file>
-        <file>src/shared/LoadPage.ui.qml</file>
+        <file>Main.qml</file>
+        <file>qml/Launch.qml</file>
+        <file>qml/LoadPage.ui.qml</file>
+        <file>qml/MetroButton.qml</file>
+        <file>qml/MetroContextMenu.qml</file>
+        <file>qml/Station.qml</file>
+        <file>qml/StationLabel.qml</file>
+        <file>qml/Timeline.qml</file>
     </qresource>
 </RCC>

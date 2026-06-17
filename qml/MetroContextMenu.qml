@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
+import NVTModule
 
 Menu {
     id: menu

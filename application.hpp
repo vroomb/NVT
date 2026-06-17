@@ -7,8 +7,3 @@
 
 #define src_dir "../../../"
 #define data_dir src_dir"temp_storage/"
-
-namespace app {
-    class launch;
-    class graph;
-}

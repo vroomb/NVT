@@ -8,12 +8,37 @@ find_package(Qt6 REQUIRED COMPONENTS Quick)
 
 qt_standard_project_setup(REQUIRES 6.10)
 
-set(CMAKE_AUTORCC ON)
+# set(CMAKE_AUTORCC ON)
+
+if (ANDROID OR IOS)
+    message(FATAL_ERROR "Platform not supported")
+    return()
+endif()
+
 
 qt_add_executable(appNVT
-    src/main.cpp
-    src/launch/launch.hpp src/launch/launch.cpp
-    application.qrc
+    main.cpp
+)
+
+qt_add_qml_module(appNVT
+    URI NVTModule
+    QML_FILES
+        "Main.qml"
+        "qml/LoadPage.ui.qml"
+        "qml/MetroButton.qml"
+        "qml/MetroContextMenu.qml"
+        "qml/StationLabel.qml"
+        "qml/Timeline.qml"
+        "qml/Station.qml"
+        "qml/Launch.qml"
+    RESOURCES
+        "res/svg/blue_arrow.svg"
+        "res/svg/lavender_arrow.svg"
+        "res/svg/yellow_arrow.svg"
+    SOURCES
+        application.hpp
+        launch.hpp
+        launch.cpp
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

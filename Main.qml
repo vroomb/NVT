@@ -1,7 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import "launch"
-import "shared"
+import NVTModule
 
 ApplicationWindow {
     visible: true
@@ -17,10 +16,10 @@ ApplicationWindow {
         focus: true
         id: contentFrame
         anchors.fill: parent
-        initialItem: "qrc:/src/shared/LoadPage.ui.qml"
+        initialItem: LoadPage {}
     }
     Component.onCompleted: {
-        //contentFrame.replace("qrc:/src/timeline/timeline.qml")
-        contentFrame.replace("qrc:/src/launch/launch.qml")
+        // contentFrame.replace("qrc:/src/timeline/timeline.qml")
+        contentFrame.replace("qml/Launch.qml")
     }
 }
