@@ -11,7 +11,8 @@ qt_standard_project_setup(REQUIRES 6.10)
 set(CMAKE_AUTORCC ON)
 
 qt_add_executable(appNVT
-    main.cpp
+    src/main.cpp
+    src/launch/launch.hpp src/launch/launch.cpp
     application.qrc
 )
 

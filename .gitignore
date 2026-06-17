@@ -41,6 +41,9 @@ Thumbs.db
 *.qbs.user*
 CMakeLists.txt.user*
 
+# qt design studio generated files
+*.ui.qmlfake*
+
 # xemacs temporary files
 *.flc
 

@@ -4,7 +4,6 @@ import QtQuick.Layouts
 
 Control {
     id: root
-    width: 360
     font.family: "Johnson ITC Std"
     font.pixelSize: 20
     padding: 20
@@ -14,6 +13,7 @@ Control {
     property color lineColorStart: "transparent"
     property color lineColorEnd: "transparent"
     property int lineWidth: 10
+    property int circleDia: 40
 
     property alias content: loader.sourceComponent
 
@@ -26,11 +26,11 @@ Control {
             Layout.minimumHeight: stationCircle.height
             Rectangle {
                 id: stationCircle
-                width: 40
-                height: 40
+                width: root.circleDia
+                height: root.circleDia
                 z: 1
                 color: root.stationInsideColor
-                radius: 40
+                radius: root.circleDia / 2
                 border.width: 5
                 border.color: root.stationOutlineColor
             }

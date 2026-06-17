@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls.Basic
-import ".."
+import "../shared"
 
 Control {
     id: root
@@ -14,10 +14,18 @@ Control {
     property color scolor: "#8fd8da"
     property color tcolor: "#d6da8f"
 
+    ContextMenu.menu: MetroContextMenu {}
+
     FontLoader {
-        id: johnston
+        id: johnston_medium
+        source: "qrc:/johnston-itc/johnston-itc-std-medium.otf"
+    }
+    FontLoader {
+        id: johnston_bold
         source: "qrc:/johnston-itc/johnston-itc-std-bold.otf"
     }
+
+    property bool buttons_active_focus_on_tab: true
 
     padding: 30
     background: Rectangle {
@@ -25,8 +33,8 @@ Control {
     }
     contentItem: ColumnLayout {
         Label {
-            text: johnston.name
-            color: pcolor
+            text: "NVT"
+            color: root.pcolor
             font.pixelSize: 30
         }
         RowLayout {
@@ -48,10 +56,11 @@ Control {
                 StationLabel {
                     id: stationLabel1
                     text: "Find..."
-                    txcolor: pcolor
-                    htcolor: bcolor
-                    hbcolor: pcolor
+                    txcolor: root.pcolor
+                    htcolor: root.bcolor
+                    hbcolor: root.pcolor
                     font: root.font
+                    buttonActiveFocusOnTab: root.buttons_active_focus_on_tab
 
                     Rectangle {
                         x: 35
@@ -102,11 +111,13 @@ Control {
                                 }
                             }
                             delegate: Row {
-                                StoryTile {
+                                StationLabel {
                                     id: storyTile
-                                    textColor: "#ffffff"
-                                    name: sname
-                                    desc: colorCode
+                                    txcolor: "#ffffff"
+                                    text: sname + "\n" + colorCode
+                                    hbcolor: colorCode
+                                    font: root.font
+                                    buttonActiveFocusOnTab: root.buttons_active_focus_on_tab
                                 }
                             }
                         }
@@ -115,10 +126,11 @@ Control {
 
                 StationLabel {
                     text: "Browse..."
-                    txcolor: pcolor
-                    htcolor: bcolor
-                    hbcolor: pcolor
+                    txcolor: root.pcolor
+                    htcolor: root.bcolor
+                    hbcolor: root.pcolor
                     font: root.font
+                    buttonActiveFocusOnTab: root.buttons_active_focus_on_tab
                 }
             }
             ColumnLayout {
@@ -139,10 +151,11 @@ Control {
                 StationLabel {
                     id: stationLabel2
                     text: "Find..."
-                    txcolor: pcolor
-                    htcolor: bcolor
-                    hbcolor: pcolor
+                    txcolor: root.pcolor
+                    htcolor: root.bcolor
+                    hbcolor: root.pcolor
                     font: root.font
+                    buttonActiveFocusOnTab: root.buttons_active_focus_on_tab
 
                     Rectangle {
                         x: 35
@@ -218,11 +231,13 @@ Control {
                                 }
                             }
                             delegate: Row {
-                                StoryTile {
+                                StationLabel {
                                     id: storyTile2
-                                    textColor: "#ffffff"
-                                    name: sname
-                                    desc: colorCode
+                                    txcolor: "#ffffff"
+                                    text: sname + "\n" + colorCode
+                                    hbcolor: colorCode
+                                    font: root.font
+                                    buttonActiveFocusOnTab: root.buttons_active_focus_on_tab
                                 }
                             }
                         }
@@ -231,10 +246,11 @@ Control {
 
                 StationLabel {
                     text: "Browse..."
-                    txcolor: pcolor
-                    htcolor: bcolor
-                    hbcolor: pcolor
+                    txcolor: root.pcolor
+                    htcolor: root.bcolor
+                    hbcolor: root.pcolor
                     font: root.font
+                    buttonActiveFocusOnTab: root.buttons_active_focus_on_tab
                 }
             }
         }

@@ -1,18 +1,15 @@
 <RCC>
     <qresource prefix="/">
-        <file>load_page.ui.qml</file>
-        <file>main.qml</file>
-        <file>svg/blue_arrow.svg</file>
-        <file>svg/lavender_arrow.svg</file>
-        <file>svg/yellow_arrow.svg</file>
-        <file>StoryTile.qml</file>
-        <file>timeline/timeline.qml</file>
-        <file>launch/launch.qml</file>
-        <file>StationLabel.qml</file>
-        <file>Station.qml</file>
-        <file>ContextMenu.qml</file>
-        <file>HighlightLabel.qml</file>
-        <file>johnston-itc/johnston-itc-std-bold.otf</file>
-        <file>johnston-itc/johnston-itc-std-medium.otf</file>
+        <file>res/svg/blue_arrow.svg</file>
+        <file>res/svg/lavender_arrow.svg</file>
+        <file>res/svg/yellow_arrow.svg</file>
+        <file>src/main.qml</file>
+        <file>src/launch/launch.qml</file>
+        <file>src/shared/MetroButton.qml</file>
+        <file>src/shared/MetroContextMenu.qml</file>
+        <file>src/shared/Station.qml</file>
+        <file>src/shared/StationLabel.qml</file>
+        <file>src/timeline/timeline.qml</file>
+        <file>src/shared/LoadPage.ui.qml</file>
     </qresource>
 </RCC>
