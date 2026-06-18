@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.20)
 
 project(NVT VERSION 0.1 LANGUAGES CXX)
 
@@ -35,11 +35,15 @@ qt_add_qml_module(appNVT
         "res/svg/blue_arrow.svg"
         "res/svg/lavender_arrow.svg"
         "res/svg/yellow_arrow.svg"
+        "res/johnston-itc/johnston-itc-std-bold.otf"
+        "res/johnston-itc/johnston-itc-std-medium.otf"
     SOURCES
         application.hpp
         launch.hpp
         launch.cpp
 )
+
+set_property(TARGET appNVT PROPERTY CXX_STANDARD 23)
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an

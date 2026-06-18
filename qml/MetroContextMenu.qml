@@ -8,23 +8,6 @@ Menu {
     font.family: "Johnston ITC Std"
     font.pixelSize: 18
 
-    // Action { text: qsTr("Tool Bar"); checkable: true }
-    // Action { text: qsTr("Side Bar"); checkable: true; checked: true }
-    // Action { text: qsTr("Status Bar"); checkable: true; checked: true }
-
-    // MenuSeparator {
-    //     contentItem: Rectangle {
-    //         implicitWidth: 200
-    //         implicitHeight: 1
-    //         color: "#21be2b"
-    //     }
-    // }
-
-    // Menu {
-    //     title: qsTr("Advanced")
-    //     // ...
-    // }
-
     topPadding: 2
     bottomPadding: 2
 

@@ -18,11 +18,11 @@ Control {
 
     FontLoader {
         id: johnston_medium
-        source: "qrc:/johnston-itc/johnston-itc-std-medium.otf"
+        source: "../res/johnston-itc/johnston-itc-std-medium.otf"
     }
     FontLoader {
         id: johnston_bold
-        source: "qrc:/johnston-itc/johnston-itc-std-bold.otf"
+        source: "../res/johnston-itc/johnston-itc-std-bold.otf"
     }
 
     property bool buttons_active_focus_on_tab: true
@@ -49,7 +49,7 @@ Control {
                     Image {
                         Layout.preferredHeight: 30
                         Layout.preferredWidth: 30
-                        source: "qrc:/svg/blue_arrow.svg"
+                        source: "../res/svg/blue_arrow.svg"
                         fillMode: Image.Stretch
                     }
                 }
@@ -84,38 +84,18 @@ Control {
                         ListView {
                             boundsBehavior: Flickable.StopAtBounds
                             id: listView
-                            model: ListModel {
-                                ListElement {
-                                    sname: "Red"
-                                    colorCode: "red"
-                                }
-
-                                ListElement {
-                                    sname: "Green"
-                                    colorCode: "green"
-                                }
-
-                                ListElement {
-                                    sname: "Blue"
-                                    colorCode: "blue"
-                                }
-
-                                ListElement {
-                                    sname: "Blue"
-                                    colorCode: "blue"
-                                }
-
-                                ListElement {
-                                    sname: "Blue"
-                                    colorCode: "blue"
-                                }
+                            model: LaunchModel {
+                                id: thing
                             }
                             delegate: Row {
+                                required property string name
+                                required property string location
                                 StationLabel {
                                     id: storyTile
                                     txcolor: "#ffffff"
-                                    text: sname + "\n" + colorCode
-                                    hbcolor: colorCode
+                                    text: name + "\n" + location
+                                    hbcolor: "white"
+                                    htcolor: "black"
                                     font: root.font
                                     buttonActiveFocusOnTab: root.buttons_active_focus_on_tab
                                 }
@@ -144,7 +124,7 @@ Control {
                     Image {
                         Layout.preferredHeight: 30
                         Layout.preferredWidth: 30
-                        source: "qrc:/svg/yellow_arrow.svg"
+                        source: "../res/svg/yellow_arrow.svg"
                         fillMode: Image.Stretch
                     }
                 }
@@ -181,61 +161,17 @@ Control {
                             id: listView2
                             model: ListModel {
                                 ListElement {
-                                    sname: "Red"
-                                    colorCode: "red"
-                                }
-
-                                ListElement {
-                                    sname: "Green"
-                                    colorCode: "green"
-                                }
-
-                                ListElement {
-                                    sname: "Blue"
-                                    colorCode: "blue"
-                                }
-
-                                ListElement {
-                                    sname: "Blue"
-                                    colorCode: "blue"
-                                }
-
-                                ListElement {
-                                    sname: "Blue"
-                                    colorCode: "blue"
-                                }
-
-                                ListElement {
-                                    sname: "Blue"
-                                    colorCode: "blue"
-                                }
-
-                                ListElement {
-                                    sname: "Blue"
-                                    colorCode: "blue"
-                                }
-
-                                ListElement {
-                                    sname: "Blue"
-                                    colorCode: "blue"
-                                }
-
-                                ListElement {
-                                    sname: "Blue"
-                                    colorCode: "blue"
-                                }
-
-                                ListElement {
-                                    sname: "White"
-                                    colorCode: "white"
+                                    name: "What"
                                 }
                             }
                             delegate: Row {
+                                required property string name
                                 StationLabel {
                                     id: storyTile2
                                     txcolor: "#ffffff"
-                                    text: sname + "\n" + colorCode
-                                    hbcolor: colorCode
+                                    text: name
+                                    hbcolor: "white"
+                                    htcolor: "black"
                                     font: root.font
                                     buttonActiveFocusOnTab: root.buttons_active_focus_on_tab
                                 }

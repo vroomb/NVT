@@ -1,12 +1,8 @@
 #include "application.hpp"
 #include "launch.hpp"
 
-#include <filesystem>
-#include <iostream>
-#include <fstream>
-
 int main(int argc, char *argv[]) {
-    std::ofstream log(src_dir"log.txt", std::ios::app);
+    std::ofstream log(data_dir"log.txt", std::ios::app);
     log << "\n\n\nNew run\n-------";
 
     QGuiApplication app(argc, argv);
