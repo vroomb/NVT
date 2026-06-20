@@ -19,7 +19,7 @@ ApplicationWindow {
         initialItem: LoadPage {}
     }
     Component.onCompleted: {
-        // contentFrame.replace("qrc:/src/timeline/timeline.qml")
-        contentFrame.replace("qml/Launch.qml")
+        contentFrame.replace("qml/Timeline.qml")
+        // contentFrame.replace("qml/Launch.qml")
     }
 }

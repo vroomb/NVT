@@ -28,31 +28,30 @@ private:
 class LaunchModel : public QAbstractListModel {
     Q_OBJECT
     QML_ELEMENT
-    // QML_SINGLETON
 
 public:
+    static void set_path_to_launch_list_file(std::string);
+
     enum LaunchRoles {
         NameRole = Qt::UserRole + 1,
         LocationRole,
     };
 
     explicit LaunchModel(QQuickItem* parent = NULL) : QAbstractListModel(parent) {
-        // add_launch(LaunchHandle("hey", "hey"));
-        // add_launch(LaunchHandle("hey", "hey"));
-        // add_launch(LaunchHandle("hey", "hey"));
-        // add_launch(LaunchHandle("hey", "hey"));
-        init(data_dir"thing.txt");
+        init();
     }
 
     void add_launch(LaunchHandle handle);
-
-    void init(const std::string& path_to_launch_list_file);
+    void init();
 
     int rowCount(const QModelIndex& parent = QModelIndex()) const;
-
     QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
+
+    std::string generate_launch_list_file();
+    void overwrite_launch_list_file();
 protected:
     QHash<int, QByteArray> roleNames() const;
 private:
     QList<LaunchHandle> m_handles{};
+    static std::string path_to_launch_list_file;
 };

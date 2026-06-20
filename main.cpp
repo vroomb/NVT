@@ -1,5 +1,6 @@
 #include "application.hpp"
 #include "launch.hpp"
+#include "timeline.hpp"
 
 int main(int argc, char *argv[]) {
     std::ofstream log(data_dir"log.txt", std::ios::app);
@@ -10,8 +11,9 @@ int main(int argc, char *argv[]) {
     QGuiApplication::setApplicationName("NVT");
     QGuiApplication::setWindowIcon(QIcon(src_dir"res/svg/lavender_arrow.svg"));
 
+    LaunchModel::set_path_to_launch_list_file(data_dir"thing.txt");
+
     QQmlApplicationEngine engine;
-    // engine.load(QUrl("qrc:/src/main.qml"));
     engine.loadFromModule("NVTModule", "Main");
 
     if (engine.rootObjects().isEmpty() == true) {

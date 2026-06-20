@@ -41,6 +41,8 @@ qt_add_qml_module(appNVT
         application.hpp
         launch.hpp
         launch.cpp
+        timeline.hpp
+        timeline.cpp
 )
 
 set_property(TARGET appNVT PROPERTY CXX_STANDARD 23)
