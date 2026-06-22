@@ -2,9 +2,17 @@
 #include "launch.hpp"
 #include "timeline.hpp"
 
+void log(std::string str) {
+    std::ofstream o(data_dir"log.txt", std::ios::app);
+    if (o.is_open() == false) {
+        std::cout << "bruuuh";
+        return;
+    }
+    o << str << "\n";
+}
+
 int main(int argc, char *argv[]) {
-    std::ofstream log(data_dir"log.txt", std::ios::app);
-    log << "\n\n\nNew run\n-------";
+    log("\n\nNew run\n-------");
 
     QGuiApplication app(argc, argv);
     QGuiApplication::setOrganizationName("vroomb");
@@ -17,7 +25,7 @@ int main(int argc, char *argv[]) {
     engine.loadFromModule("NVTModule", "Main");
 
     if (engine.rootObjects().isEmpty() == true) {
-        log << "\n" << "engine was empty";
+        log("engine was empty");
         return -1;
     }
 

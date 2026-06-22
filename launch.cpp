@@ -6,7 +6,7 @@ LaunchHandle::LaunchHandle(std::string name_colon_location) {
     if (name_colon_location.contains(":") == false) {
         m_name = "parse_error";
         m_location = "parse_error";
-        qWarning() << "launchhandle parse error:";
+        qWarning() << "launchHandle parse error:";
         qWarning() << "parse target: " << name_colon_location;
     } else {
         auto colon_index = name_colon_location.find(":");

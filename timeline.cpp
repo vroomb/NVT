@@ -1,3 +1,5 @@
 #include "timeline.hpp"
 
-// TimelineGraph::TimelineGraph(QQuickItem* parent) : QQuickItem(parent) {}
+void TimelineGraph::add_node() {
+    log("heh");
+}

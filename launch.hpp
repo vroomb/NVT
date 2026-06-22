@@ -24,7 +24,7 @@ private:
 };
 
 
-// TODO: Turn this into a qset based thing
+// TODO: Turn this into a QSet based thing
 class LaunchModel : public QAbstractListModel {
     Q_OBJECT
     QML_ELEMENT
