@@ -13,8 +13,8 @@ QPointF RepeatingTexture::anchorPoint() const {
 }
 void RepeatingTexture::setAnchorPoint(QPointF new_anchorPoint) {
     if      (anchorXEnabled() == true  && anchorYEnabled() == true ) m_anchorPoint = new_anchorPoint;
-    else if (anchorXEnabled() == false && anchorYEnabled() == true ) m_anchorPoint.setX(new_anchorPoint.x());
-    else if (anchorXEnabled() == true  && anchorYEnabled() == false) m_anchorPoint.setY(new_anchorPoint.y());
+    else if (anchorXEnabled() == false && anchorYEnabled() == true ) m_anchorPoint.setY(new_anchorPoint.y());
+    else if (anchorXEnabled() == true  && anchorYEnabled() == false) m_anchorPoint.setX(new_anchorPoint.x());
     else                                                             return;
     emit anchorPointChanged();
 }
