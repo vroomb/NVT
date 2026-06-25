@@ -15,9 +15,13 @@ if (ANDROID OR IOS)
     return()
 endif()
 
-
 qt_add_executable(appNVT
     main.cpp
+)
+
+set_source_files_properties(qml/Colors.qml
+    PROPERTIES
+        QT_QML_SINGLETON_TYPE TRUE
 )
 
 qt_add_qml_module(appNVT
@@ -27,10 +31,13 @@ qt_add_qml_module(appNVT
         "qml/LoadPage.ui.qml"
         "qml/MetroButton.qml"
         "qml/MetroContextMenu.qml"
+        "qml/MetroMenuBar.qml"
         "qml/StationLabel.qml"
         "qml/Timeline.qml"
         "qml/Station.qml"
         "qml/Launch.qml"
+        "qml/Colors.qml"
+        # "qml/TilingTexture.qml"
     RESOURCES
         "res/svg/blue_arrow.svg"
         "res/svg/lavender_arrow.svg"
@@ -43,6 +50,8 @@ qt_add_qml_module(appNVT
         launch.cpp
         timeline.hpp
         timeline.cpp
+        repeating_texture.hpp
+        repeating_texture.cpp
 )
 
 set_property(TARGET appNVT PROPERTY CXX_STANDARD 23)

@@ -4,6 +4,7 @@
 
 void log(std::string str) {
     std::ofstream o(data_dir"log.txt", std::ios::app);
+    qDebug() << str;
     if (o.is_open() == false) {
         std::cout << "bruuuh";
         return;
@@ -12,7 +13,7 @@ void log(std::string str) {
 }
 
 int main(int argc, char *argv[]) {
-    log("\n\nNew run\n-------");
+    log("New run");
 
     QGuiApplication app(argc, argv);
     QGuiApplication::setOrganizationName("vroomb");

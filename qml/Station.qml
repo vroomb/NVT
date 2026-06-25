@@ -9,8 +9,8 @@ Control {
     font.pixelSize: 20
     padding: 20
 
-    property color stationOutlineColor: "#ceb9d9"
-    property color stationInsideColor: "#1f1f1f"
+    property color stationOutlineColor: Colors.pri
+    property color stationInsideColor: Colors.bse
     property color lineColorStart: "transparent"
     property color lineColorEnd: "transparent"
     property int lineWidth: 10

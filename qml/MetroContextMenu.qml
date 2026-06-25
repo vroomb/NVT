@@ -32,7 +32,7 @@ Menu {
             width: 20
             height: 20
             visible: menuItem.subMenu
-            source: "qrc:/svg/blue_arrow.svg"
+            source: "../res/svg/blue_arrow.svg"
         }
 
         indicator: Item {
@@ -58,11 +58,13 @@ Menu {
         }
 
         contentItem: MetroButton {
+            z: -1
             leftPadding: menuItem.indicator.width
             rightPadding: menuItem.arrow.width
             text: menuItem.text
             font: menuItem.font
-            txcolor: "#ceb9d9"
+            txcolor: Colors.pri
+            click: false
             hover: false
             htcolor: "#292929"
             hbcolor: txcolor
@@ -80,7 +82,7 @@ Menu {
         implicitWidth: 200
         implicitHeight: 30
         color: "#292929"
-        border.color: "#ceb9d9"
+        border.color: Colors.pri
         radius: 5
     }
 }

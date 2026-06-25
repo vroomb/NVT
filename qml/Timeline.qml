@@ -7,13 +7,8 @@ import NVTModule
 Control {
     id: root
 
-    property color bcolor: "#1f1f1f"
-    property color pcolor: "#ceb9d9"
-    property color scolor: "#8fd8da"
-    property color tcolor: "#d6da8f"
-
     background: Rectangle {
-        color: bcolor
+        color: Colors.bse
     }
 
     function round(a, b): real {
@@ -25,6 +20,22 @@ Control {
 
     MetroContextMenu {
         id: contextMenu
+        Action {
+            text: "Add an event"
+            onTriggered: timelineGraph.add_node()
+        }
+        Action {
+            text: "Add an event"
+            onTriggered: print("heh")
+        }
+        Action {
+            text: "Add an event"
+            onTriggered: print("heh")
+        }
+        Action {
+            text: "Add an event"
+            onTriggered: print("heh")
+        }
         Action {
             text: "Add an event"
             onTriggered: print("heh")
@@ -44,50 +55,40 @@ Control {
         running: true
         repeat: true
         onTriggered: {
-            timelineGraph.x += root.speed * (root.left_mov - root.right_mov)
-            timelineGraph.y += root.speed * (root.up_mov - root.down_mov)
+            running = root.left_mov | root.right_mov | root.up_mov | root.down_mov;
+            timelineGraph.x += root.speed * (root.left_mov - root.right_mov);
+            timelineGraph.y += root.speed * (root.up_mov - root.down_mov);
         }
     }
 
-    Keys.onPressed: (event) => {
+    function keysOnPressed(event: KeyEvent) {
         if (event.isAutoRepeat === false) {
-            print("pressed: " + up_mov + " " + left_mov + " " + down_mov + " " + right_mov)
+            // print("pressed: " + up_mov + " " + left_mov + " " + down_mov + " " + right_mov)
 
-            if (event.key === Qt.Key_W || event.key === Qt.Key_Up)
-                up_mov = 1
-            if (event.key === Qt.Key_A || event.key === Qt.Key_Left)
-                left_mov = 1
-            if (event.key === Qt.Key_S || event.key === Qt.Key_Down)
-                down_mov = 1
-            if (event.key === Qt.Key_D || event.key === Qt.Key_Right)
-                right_mov = 1
+            timer.running = true;
+
+            if      (event.key === Qt.Key_W || event.key === Qt.Key_Up)    up_mov    = 1
+            else if (event.key === Qt.Key_A || event.key === Qt.Key_Left)  left_mov  = 1
+            else if (event.key === Qt.Key_S || event.key === Qt.Key_Down)  down_mov  = 1
+            else if (event.key === Qt.Key_D || event.key === Qt.Key_Right) right_mov = 1
         }
     }
 
-    Keys.onReleased: (event) => {
+    function keysOnReleased(event: KeyEvent) {
         if (event.isAutoRepeat === false) {
-            print("released: " + up_mov + " " + left_mov + " " + down_mov + " " + right_mov)
+            // print("released: " + up_mov + " " + left_mov + " " + down_mov + " " + right_mov)
 
-            if (event.key === Qt.Key_W || event.key === Qt.Key_Up)
-                up_mov = 0
-            if (event.key === Qt.Key_A || event.key === Qt.Key_Left)
-                left_mov = 0
-            if (event.key === Qt.Key_S || event.key === Qt.Key_Down)
-                down_mov = 0
-            if (event.key === Qt.Key_D || event.key === Qt.Key_Right)
-                right_mov = 0
+            if      (event.key === Qt.Key_W || event.key === Qt.Key_Up)    up_mov    = 0
+            else if (event.key === Qt.Key_A || event.key === Qt.Key_Left)  left_mov  = 0
+            else if (event.key === Qt.Key_S || event.key === Qt.Key_Down)  down_mov  = 0
+            else if (event.key === Qt.Key_D || event.key === Qt.Key_Right) right_mov = 0
         }
     }
 
     TimelineGraph {
         id: timelineGraph
-
-        property list<point> verts: [
-            Qt.point(300, 300),
-            Qt.point(300, 300),
-            Qt.point(300, 300),
-            Qt.point(300, 300),
-        ]
+        x: parent.width / 2
+        y: parent.height / 2
 
         Behavior on x {
             NumberAnimation { duration: 16 }
@@ -97,112 +98,54 @@ Control {
             NumberAnimation { duration: 16 }
         }
 
-        Item {
-            objectName: "vertex1"
-            x: timelineGraph.verts[1].x
-            y: timelineGraph.verts[1].y
+        Rectangle {
+            id: red
+            color: "red"
+            height: 50
+            width: 50
             onXChanged: {
-                path1.x = x
+                timelineGraph.update_vertices(red.x + (width/2), red.y + (height/2), green.x + (width/2), green.y + (height/2))
             }
             onYChanged: {
-                path1.y = y
+                timelineGraph.update_vertices(red.x + (width/2), red.y + (height/2), green.x + (width/2), green.y + (height/2))
             }
-            Rectangle {
-                // color: "blue"
-                color: "transparent"
-                height: 80
-                width: 50
-                x: -(width / 2)
-                y: -(height / 2)
+            MouseArea {
+                anchors.fill: parent
+                drag.target: parent
             }
         }
 
-        Item {
-            objectName: "vertex2"
-            x: timelineGraph.verts[2].x
-            y: timelineGraph.verts[2].y
+        Rectangle {
+            id: green
+            color: "green"
+            height: 50
+            width: 50
             onXChanged: {
-                path2.x = x
+                timelineGraph.update_vertices(red.x + (width/2), red.y + (height/2), green.x + (width/2), green.y + (height/2))
             }
             onYChanged: {
-                path2.y = y
+                timelineGraph.update_vertices(red.x + (width/2), red.y + (height/2), green.x + (width/2), green.y + (height/2))
             }
-            Rectangle {
-                // color: "yellow"
-                color: "transparent"
-                height: 50
-                width: 80
-                x: -(width / 2)
-                y: -(height / 2)
+            MouseArea {
+                anchors.fill: parent
+                drag.target: parent
             }
+        }
+
+        onPolygonChanged: {
+            pathPolyline.path = polygon
         }
 
         Shape {
-            anchors.fill: parent
-            id: shape
+            z: -1
             ShapePath {
-                id: path
+                id: shapePathPolyline
                 strokeColor: "white"
                 strokeWidth: 16
                 fillColor: "transparent"
 
-                startX: timelineGraph.verts[0].x
-                startY: timelineGraph.verts[0].y
-
-                PathLine {
-                    id: path1
-                    x: timelineGraph.verts[1].x
-                    y: timelineGraph.verts[1].y
-                }
-                PathLine {
-                    id: path2
-                    x: timelineGraph.verts[2].x
-                    y: timelineGraph.verts[2].y
-                }
-                PathLine {
-                    id: path3
-                    x: timelineGraph.verts[3].x
-                    y: timelineGraph.verts[3].y
-                }
-            }
-
-            Rectangle {
-                color: "red"
-                height: 50
-                width: 50
-                x: path.startX - (width / 2)
-                y: path.startY - (height / 2)
-                onXChanged: {
-                    path.startX = x + (width / 2);
-                    timelineGraph.update_vertices(path.startX, path.startY, path3.x, path3.y)
-                }
-                onYChanged: {
-                    path.startY = y + (height / 2);
-                    timelineGraph.update_vertices(path.startX, path.startY, path3.x, path3.y)
-                }
-                MouseArea {
-                    anchors.fill: parent
-                    drag.target: parent
-                }
-            }
-
-            Rectangle {
-                color: "green"
-                height: 50
-                width: 50
-                x: path3.x - (width / 2)
-                y: path3.y - (height / 2)
-                onXChanged: {
-                    path3.x = x + (width / 2);
-                    timelineGraph.update_vertices(path.startX, path.startY, path3.x, path3.y)
-                }
-                onYChanged: {
-                    path3.y = y + (height / 2);
-                    timelineGraph.update_vertices(path.startX, path.startY, path3.x, path3.y)
-                }
-                MouseArea {
-                    anchors.fill: parent
-                    drag.target: parent
+                PathPolyline {
+                    id: pathPolyline
                 }
             }
         }
@@ -214,4 +157,90 @@ Control {
         anchors.fill: parent
         drag.target: timelineGraph
     }
+
+    // RowLayout {
+    //     id: bottomthing
+    //     anchors.bottom: parent.bottom
+    //     anchors.horizontalCenter: timelineGraph.horizontalCenter
+    //     Rectangle {
+    //         height: 20
+    //         width: 200
+    //         color: Colors.sec
+    //     }
+    //     Rectangle {
+    //         height: 20
+    //         width: 200
+    //         color: Colors.ter
+    //     }
+    //     Rectangle {
+    //         height: 20
+    //         width: 200
+    //         color: Colors.sec
+    //     }
+    //     Rectangle {
+    //         height: 20
+    //         width: 200
+    //         color: Colors.ter
+    //     }
+    //     Rectangle {
+    //         height: 20
+    //         width: 200
+    //         color: Colors.sec
+    //     }
+    //     Rectangle {
+    //         height: 20
+    //         width: 200
+    //         color: Colors.ter
+    //     }
+    //     Rectangle {
+    //         height: 20
+    //         width: 200
+    //         color: Colors.sec
+    //     }
+    //     Rectangle {
+    //         height: 20
+    //         width: 200
+    //         color: Colors.ter
+    //     }
+    //     Rectangle {
+    //         height: 20
+    //         width: 200
+    //         color: Colors.sec
+    //     }
+    //     Rectangle {
+    //         height: 20
+    //         width: 200
+    //         color: Colors.ter
+    //     }
+    //     Rectangle {
+    //         height: 20
+    //         width: 200
+    //         color: Colors.sec
+    //     }
+    //     Rectangle {
+    //         height: 20
+    //         width: 200
+    //         color: Colors.ter
+    //     }
+    //     Rectangle {
+    //         height: 20
+    //         width: 200
+    //         color: Colors.sec
+    //     }
+    //     Rectangle {
+    //         height: 20
+    //         width: 200
+    //         color: Colors.ter
+    //     }
+    //     Rectangle {
+    //         height: 20
+    //         width: 200
+    //         color: Colors.sec
+    //     }
+    //     Rectangle {
+    //         height: 20
+    //         width: 200
+    //         color: Colors.ter
+    //     }
+    // }
 }

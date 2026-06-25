@@ -20,6 +20,7 @@ AbstractButton {
     implicitHeight: topPadding + control.height + bottomPadding
 
     property bool hover: true
+    property bool click: true
     property bool highlight: false
 
     function onEntered(): void {
@@ -170,12 +171,14 @@ AbstractButton {
             hoverEnabled: true
             acceptedButtons: Qt.LeftButton
             onClicked: {
-                if (root.hover == true) {
-                    exitedAnim.start();
-                } else {
-                    enteredAnim.start();
+                if (click == true) {
+                    if (root.hover == true) {
+                        exitedAnim.start();
+                    } else {
+                        enteredAnim.start();
+                    }
+                    root._onClicked();
                 }
-                root._onClicked();
             }
             onEntered: {
                 if (root.hover == true) {

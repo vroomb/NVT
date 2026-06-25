@@ -9,10 +9,10 @@ Control {
     // font.bold: true
     font.pixelSize: 25
 
-    property color bcolor: "#1f1f1f"
-    property color pcolor: "#ceb9d9"
-    property color scolor: "#8fd8da"
-    property color tcolor: "#d6da8f"
+    // property color bcolor: "#1f1f1f"
+    // property color pcolor: "#ceb9d9"
+    // property color scolor: "#8fd8da"
+    // property color tcolor: "#d6da8f"
 
     ContextMenu.menu: MetroContextMenu {}
 
@@ -34,7 +34,7 @@ Control {
     contentItem: ColumnLayout {
         Label {
             text: "NVT"
-            color: root.pcolor
+            color: Colors.pri
             font.pixelSize: 30
         }
         RowLayout {
@@ -56,9 +56,9 @@ Control {
                 StationLabel {
                     id: stationLabel1
                     text: "Find..."
-                    txcolor: root.pcolor
-                    htcolor: root.bcolor
-                    hbcolor: root.pcolor
+                    txcolor: Colors.pri
+                    htcolor: Colors.bse
+                    hbcolor: Colors.pri
                     font: root.font
                     buttonActiveFocusOnTab: root.buttons_active_focus_on_tab
 
@@ -106,9 +106,9 @@ Control {
 
                 StationLabel {
                     text: "Browse..."
-                    txcolor: root.pcolor
-                    htcolor: root.bcolor
-                    hbcolor: root.pcolor
+                    txcolor: Colors.pri
+                    htcolor: Colors.bse
+                    hbcolor: Colors.pri
                     font: root.font
                     buttonActiveFocusOnTab: root.buttons_active_focus_on_tab
                 }
@@ -131,9 +131,9 @@ Control {
                 StationLabel {
                     id: stationLabel2
                     text: "Find..."
-                    txcolor: root.pcolor
-                    htcolor: root.bcolor
-                    hbcolor: root.pcolor
+                    txcolor: Colors.pri
+                    htcolor: Colors.bse
+                    hbcolor: Colors.pri
                     font: root.font
                     buttonActiveFocusOnTab: root.buttons_active_focus_on_tab
 

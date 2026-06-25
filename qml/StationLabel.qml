@@ -15,8 +15,8 @@ Control {
     property int yinset: 0
     property bool buttonActiveFocusOnTab: false
 
-    property color stationOutlineColor: "#ceb9d9"
-    property color stationInsideColor: "#1f1f1f"
+    property color stationOutlineColor: Colors.pri
+    property color stationInsideColor: Colors.bse
     property color lineColorStart: "transparent"
     property color lineColorEnd: "transparent"
     property int lineWidth: 10
