@@ -51,11 +51,17 @@ signals:
     void anchorModeChanged();
 
 private:
+    QQmlEngine* engine = NULL;
+
     QPointF m_anchorPoint{};
     QPointF m_relAnchorPoint{};
+
     QQuickItem* m_anchorItem = NULL;
+    QQuickItem* m_GridLayout = NULL;
     QQmlComponent* m_texture = NULL;
-    bool m_anchorXEnabled = false;
-    bool m_anchorYEnabled = false;
+
+    bool m_anchorXEnabled = true;
+    bool m_anchorYEnabled = true;
+
     int m_anchorMode;
 };

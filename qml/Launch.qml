@@ -16,15 +16,6 @@ Control {
 
     ContextMenu.menu: MetroContextMenu {}
 
-    FontLoader {
-        id: johnston_medium
-        source: "../res/johnston-itc/johnston-itc-std-medium.otf"
-    }
-    FontLoader {
-        id: johnston_bold
-        source: "../res/johnston-itc/johnston-itc-std-bold.otf"
-    }
-
     property bool buttons_active_focus_on_tab: true
 
     padding: 30

@@ -5,10 +5,14 @@
 #define max(x, y) (((x) > (y)) ? (x) : (y))
 #define sgn(x) ((x > 0) ? 1 : ((x < 0) ? -1 : 0))
 
+#define timeline_graph_file data_dir"graph.txt"
 
-class TimelineNode {
+
+class TimelineNode : public QQuickItem {
+    Q_OBJECT
+    QML_ELEMENT
 public:
-    TimelineNode();
+    explicit TimelineNode(QQuickItem* parent = NULL) : QQuickItem(parent) {}
 
 private:
 };

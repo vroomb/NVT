@@ -37,6 +37,7 @@ qt_add_qml_module(appNVT
         "qml/Station.qml"
         "qml/Launch.qml"
         "qml/Colors.qml"
+        "qml/Node.qml"
         # "qml/TilingTexture.qml"
     RESOURCES
         "res/svg/blue_arrow.svg"
@@ -50,8 +51,8 @@ qt_add_qml_module(appNVT
         launch.cpp
         timeline.hpp
         timeline.cpp
-        repeating_texture.hpp
-        repeating_texture.cpp
+        # repeating_texture.hpp
+        # repeating_texture.cpp
 )
 
 set_property(TARGET appNVT PROPERTY CXX_STANDARD 23)

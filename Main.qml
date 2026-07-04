@@ -6,6 +6,18 @@ import NVTModule
 ApplicationWindow {
     visible: true
 
+    FontLoader {
+        id: johnston_medium
+        source: "res/johnston-itc/johnston-itc-std-medium.otf"
+    }
+    FontLoader {
+        id: johnston_bold
+        source: "res/johnston-itc/johnston-itc-std-bold.otf"
+    }
+
+    font.family: "Johnston ITC Std"
+    font.pixelSize: 25
+
     minimumWidth: 1280
     minimumHeight: 720
 
@@ -41,62 +53,8 @@ ApplicationWindow {
         }
     }
 
-    Item {
-        id: item
-        objectName: "objectifying"
+    Node {
+        anchors.centerIn: parent
+        font: parent.font
     }
-    Item {
-        id: item2
-        objectName: "objectifying dos"
-    }
-
-    RepeatingTexture {
-        anchors.fill: parent
-        Rectangle {
-            anchors.fill: parent
-            color: "red"
-        }
-
-        anchorPoint: Qt.point(10, 10)
-        anchorItem: item
-        onAnchorItemChanged: {
-            if (anchorItem != item2)
-                anchorItem = item2
-        }
-        texture: GridLayout {
-            columns: 2
-            rows: 2
-            Rectangle {
-                height: 50
-                width: 50
-                color: Colors.sec
-            }
-            Rectangle {
-                height: 50
-                width: 50
-                color: Colors.ter
-            }
-            Rectangle {
-                height: 50
-                width: 50
-                color: Colors.ter
-            }
-            Rectangle {
-                height: 50
-                width: 50
-                color: Colors.sec
-            }
-        }
-    }
-
-    // StackView {
-    //     //focus: true
-    //     id: contentFrame
-    //     anchors.fill: parent
-    //     initialItem: LoadPage {}
-    // }
-    // Component.onCompleted: {
-    //     contentFrame.replace("qml/Timeline.qml")
-    //     // contentFrame.replace("qml/Launch.qml")
-    // }
 }

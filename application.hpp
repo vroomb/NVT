@@ -6,6 +6,7 @@
 #include <QQmlApplicationEngine>
 #include <QAbstractListModel>
 #include <QtLogging>
+#include <QtQml>
 
 #include <filesystem>
 #include <iostream>

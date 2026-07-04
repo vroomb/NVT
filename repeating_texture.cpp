@@ -3,7 +3,13 @@
 RepeatingTexture::RepeatingTexture(QQuickItem* parent, int mode):
     QQuickItem(parent),
     m_anchorMode(mode)
-{}
+{
+    engine = qmlEngine(this);
+    QQmlComponent c(engine, QUrl::fromLocalFile("qml/TilingTexture.qml"));
+    m_GridLayout = qobject_cast<QQuickItem*>(c.create());
+
+    
+}
 
 QPointF RepeatingTexture::anchorPoint() const {
     if (m_anchorMode == absolute)
@@ -20,12 +26,20 @@ void RepeatingTexture::setAnchorPoint(QPointF new_anchorPoint) {
 }
 
 void RepeatingTexture::setAnchorPointX(qreal new_anchorPointX) {
+    if (m_anchorXEnabled == false) {
+        m_relAnchorPoint.setX(m_anchorPoint.x() - new_anchorPointX);
+    } else {
+        emit anchorPointChanged();
+    }
     m_anchorPoint.setX(new_anchorPointX);
-    emit anchorPointChanged();
 }
 void RepeatingTexture::setAnchorPointY(qreal new_anchorPointY) {
+    if (m_anchorYEnabled == false) {
+        m_relAnchorPoint.setY(m_anchorPoint.y() - new_anchorPointY);
+    } else {
+        emit anchorPointChanged();
+    }
     m_anchorPoint.setY(new_anchorPointY);
-    emit anchorPointChanged();
 }
 
 QQuickItem* RepeatingTexture::anchorItem() const {
