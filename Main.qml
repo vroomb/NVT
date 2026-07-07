@@ -22,7 +22,7 @@ ApplicationWindow {
     minimumHeight: 720
 
     background: Rectangle {
-        color: Colors.bse
+        color: "#111"
     }
 
     menuBar: MetroMenuBar {

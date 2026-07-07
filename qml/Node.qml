@@ -6,7 +6,8 @@ import NVTModule
 Control {
     id: root
 
-    property string text: "hey"
+    property string text: "Judgement Day"
+    property string desc: "All of the floating islands start losing their ability to float"
     property color bgcolor: "transparent"
     property color txcolor: Colors.pri
     property color hbcolor: Colors.pri
@@ -22,16 +23,32 @@ Control {
     property int lineWidth: 10
     property int circleDia: 40
 
-    padding: 10
+    padding: 20
 
     state: "passive"
 
-    contentItem: GridLayout {
-        rows: 2
-        columns: 2
+    contentItem: Item {
+        id: content
+        property real iw: stationCircle.width + textEdit.anchors.leftMargin + stationCircle.anchors.rightMargin + textEdit.width
+        property real ih: stationCircle.height + stationCircle.anchors.bottomMargin + textEdit.anchors.topMargin + textEdit.height
+
+        clip: true
+
+        Behavior on implicitHeight {
+            PropertyAnimation {
+                duration: 200
+                easing: Easing.InOutQuad
+            }
+        }
+
+        Behavior on implicitWidth {
+            PropertyAnimation {
+                duration: 200
+                easing: Easing.InOutQuad
+            }
+        }
+
         Rectangle {
-            Layout.row: 0
-            Layout.column: 0
             id: stationCircle
             width: root.circleDia
             height: root.circleDia
@@ -40,32 +57,38 @@ Control {
             radius: root.circleDia / 2
             border.width: 5
             border.color: root.stationOutlineColor
+            anchors.margins: 5
         }
 
         TextEdit {
             id: textEdit
-
-            Layout.row: 1
-            Layout.column: 1
-            // anchors.top: stationCircle.bottom
-            // anchors.left: stationCircle.right
+            anchors.left: stationCircle.right
+            anchors.margins: 5
+            anchors.leftMargin: 15
 
             font: root.font
-            text: "Liverpool street"
+            text: root.text
             color: root.txcolor
+        }
 
-            // Behavior on Layout.row {
-            //     PropertyAnimation {
-            //         target: textEdit
-            //         properties: "y"
-            //         duration: 200
-            //     }
-            // }
-            Behavior on y {
-                PropertyAnimation {
-                    duration: 200
-                }
-            }
+        Rectangle {
+            id: div
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.margins: 20
+            color: "grey"
+            height: 1
+        }
+
+        TextArea {
+            id: details
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.top: div.bottom
+            text: root.desc
+            placeholderText: "Details for the event."
+            anchors.margins: 10
+            wrapMode: TextEdit.Wrap
         }
     }
 
@@ -73,16 +96,20 @@ Control {
         id: mouseArea
         anchors.fill: parent
         hoverEnabled: true
+        //propagateComposedEvents: true
+        //z: -1
         onEntered: {
             root.state = "hovered"
             timer.start()
+            mouse.accepted = false
         }
         onExited: {
             root.state = "passive"
+            mouse.accepted = false
         }
         Timer {
             id: timer
-            interval: 400
+            interval: 800
             repeat: false
             onTriggered: {
                 if (mouseArea.containsMouse === true) {
@@ -94,6 +121,7 @@ Control {
 
     background: Rectangle {
         color: Colors.bse
+        opacity: 0
         border.color: "grey"
         border.width: 1
         radius: 10
@@ -108,8 +136,19 @@ Control {
             PropertyChanges {
                 root.background.opacity: 0
             }
+            AnchorChanges {
+                target: textEdit
+                anchors.top: stationCircle.bottom
+            }
+            AnchorChanges {
+                target: div
+                anchors.top: textEdit.bottom
+            }
             PropertyChanges {
-                textEdit.Layout.row: 1
+                content.implicitWidth: content.iw
+            }
+            PropertyChanges {
+                content.implicitHeight: content.ih
             }
         },
         State {
@@ -117,14 +156,48 @@ Control {
             PropertyChanges {
                 root.background.opacity: 1
             }
+            AnchorChanges {
+                target: textEdit
+                anchors.top: stationCircle.bottom
+            }
+            AnchorChanges {
+                target: div
+                anchors.top: textEdit.bottom
+            }
+            PropertyChanges {
+                content.implicitWidth: content.iw
+            }
+            PropertyChanges {
+                content.implicitHeight: content.ih
+            }
         },
         State {
             name: "expanded"
             PropertyChanges {
                 root.background.opacity: 1
             }
+            AnchorChanges {
+                target: textEdit
+                anchors.verticalCenter: stationCircle.verticalCenter
+            }
+            AnchorChanges {
+                target: div
+                anchors.top: stationCircle.bottom
+            }
             PropertyChanges {
-                textEdit.Layout.row: 0
+                content.implicitWidth: 500
+            }
+            PropertyChanges {
+                content.implicitHeight: 500
+            }
+        }
+    ]
+    transitions: [
+        Transition {
+            from: "hovered"
+            to: "expanded"
+            AnchorAnimation {
+                duration: 200
             }
         }
     ]
