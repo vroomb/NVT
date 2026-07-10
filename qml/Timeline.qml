@@ -8,7 +8,7 @@ Control {
     id: root
 
     background: Rectangle {
-        color: Colors.bse
+        color: "#111"
     }
 
     function round(a, b): real {
@@ -16,30 +16,22 @@ Control {
         return (a - (a % b));
     }
 
-    ContextMenu.menu: contextMenu
+    property point pin
 
-    MetroContextMenu {
+    ContextMenu.menu: MetroContextMenu {
         id: contextMenu
         Action {
             text: "Add an event"
-            onTriggered: timelineGraph.add_node()
+            onTriggered: {
+                pin.x = pin.x - timelineGraph.x
+                pin.y = pin.y - timelineGraph.y
+                timelineGraph.add_node(pin)
+            }
         }
-        Action {
-            text: "Add an event"
-            onTriggered: print("heh")
-        }
-        Action {
-            text: "Add an event"
-            onTriggered: print("heh")
-        }
-        Action {
-            text: "Add an event"
-            onTriggered: print("heh")
-        }
-        Action {
-            text: "Add an event"
-            onTriggered: print("heh")
-        }
+    }
+
+    ContextMenu.onRequested: position => {
+        root.pin = position
     }
 
     property int up_mov: 0
@@ -90,6 +82,15 @@ Control {
         x: parent.width / 2
         y: parent.height / 2
 
+        property real offset: 0
+
+        onPolygonChanged: {
+            // pathPolyline.path = polygon
+            // rec.x = pathPolyline.path[2].x - rec.width/2
+            // rec.y = pathPolyline.path[2].y - rec.height/2
+            // print(pathPolyline.path[2])
+        }
+
         Behavior on x {
             NumberAnimation { duration: 16 }
         }
@@ -98,55 +99,68 @@ Control {
             NumberAnimation { duration: 16 }
         }
 
-        Rectangle {
+
+        Node {
             id: red
-            color: "red"
-            height: 50
-            width: 50
+            text: "red"
+            x: -300
+            y: -100
             onXChanged: {
-                timelineGraph.update_vertices(red.x + (width/2), red.y + (height/2), green.x + (width/2), green.y + (height/2))
+                timelineGraph.update_vertices(red.x + parent.offset, red.y + parent.offset, green.x + parent.offset, green.y + parent.offset)
             }
             onYChanged: {
-                timelineGraph.update_vertices(red.x + (width/2), red.y + (height/2), green.x + (width/2), green.y + (height/2))
-            }
-            MouseArea {
-                anchors.fill: parent
-                drag.target: parent
+                timelineGraph.update_vertices(red.x + parent.offset, red.y + parent.offset, green.x + parent.offset, green.y + parent.offset)
             }
         }
 
-        Rectangle {
+        Node {
             id: green
-            color: "green"
-            height: 50
-            width: 50
+            text: "green"
+            x: 300
+            y: 100
             onXChanged: {
-                timelineGraph.update_vertices(red.x + (width/2), red.y + (height/2), green.x + (width/2), green.y + (height/2))
+                timelineGraph.update_vertices(red.x + parent.offset, red.y + parent.offset, green.x + parent.offset, green.y + parent.offset)
             }
             onYChanged: {
-                timelineGraph.update_vertices(red.x + (width/2), red.y + (height/2), green.x + (width/2), green.y + (height/2))
+                timelineGraph.update_vertices(red.x + parent.offset, red.y + parent.offset, green.x + parent.offset, green.y + parent.offset)
             }
-            MouseArea {
+        }
+
+        // Shape {
+        //     z: -1
+        //     ShapePath {
+        //         id: shapePathPolyline
+        //         strokeColor: "white"
+        //         strokeWidth: 16
+        //         fillColor: "transparent"
+
+        //         PathPolyline {
+        //             id: pathPolyline
+        //         }
+        //     }
+        //     Component.onCompleted: {
+        //         timelineGraph.update_vertices(red.x + parent.offset, red.y + parent.offset, green.x + parent.offset, green.y + parent.offset)
+        //     }
+        // }
+        Chain {
+
+        }
+
+        MouseArea {
+            id: rec
+            width: 100
+            height: 100
+            z: 1
+
+            drag.target: this
+
+            onReleased: {
+
+            }
+
+            Rectangle {
                 anchors.fill: parent
-                drag.target: parent
-            }
-        }
-
-        onPolygonChanged: {
-            pathPolyline.path = polygon
-        }
-
-        Shape {
-            z: -1
-            ShapePath {
-                id: shapePathPolyline
-                strokeColor: "white"
-                strokeWidth: 16
-                fillColor: "transparent"
-
-                PathPolyline {
-                    id: pathPolyline
-                }
+                color: "red"
             }
         }
     }
@@ -157,90 +171,4 @@ Control {
         anchors.fill: parent
         drag.target: timelineGraph
     }
-
-    // RowLayout {
-    //     id: bottomthing
-    //     anchors.bottom: parent.bottom
-    //     anchors.horizontalCenter: timelineGraph.horizontalCenter
-    //     Rectangle {
-    //         height: 20
-    //         width: 200
-    //         color: Colors.sec
-    //     }
-    //     Rectangle {
-    //         height: 20
-    //         width: 200
-    //         color: Colors.ter
-    //     }
-    //     Rectangle {
-    //         height: 20
-    //         width: 200
-    //         color: Colors.sec
-    //     }
-    //     Rectangle {
-    //         height: 20
-    //         width: 200
-    //         color: Colors.ter
-    //     }
-    //     Rectangle {
-    //         height: 20
-    //         width: 200
-    //         color: Colors.sec
-    //     }
-    //     Rectangle {
-    //         height: 20
-    //         width: 200
-    //         color: Colors.ter
-    //     }
-    //     Rectangle {
-    //         height: 20
-    //         width: 200
-    //         color: Colors.sec
-    //     }
-    //     Rectangle {
-    //         height: 20
-    //         width: 200
-    //         color: Colors.ter
-    //     }
-    //     Rectangle {
-    //         height: 20
-    //         width: 200
-    //         color: Colors.sec
-    //     }
-    //     Rectangle {
-    //         height: 20
-    //         width: 200
-    //         color: Colors.ter
-    //     }
-    //     Rectangle {
-    //         height: 20
-    //         width: 200
-    //         color: Colors.sec
-    //     }
-    //     Rectangle {
-    //         height: 20
-    //         width: 200
-    //         color: Colors.ter
-    //     }
-    //     Rectangle {
-    //         height: 20
-    //         width: 200
-    //         color: Colors.sec
-    //     }
-    //     Rectangle {
-    //         height: 20
-    //         width: 200
-    //         color: Colors.ter
-    //     }
-    //     Rectangle {
-    //         height: 20
-    //         width: 200
-    //         color: Colors.sec
-    //     }
-    //     Rectangle {
-    //         height: 20
-    //         width: 200
-    //         color: Colors.ter
-    //     }
-    // }
 }

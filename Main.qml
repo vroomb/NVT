@@ -5,6 +5,7 @@ import NVTModule
 
 ApplicationWindow {
     visible: true
+    visibility: Window.Maximized
 
     FontLoader {
         id: johnston_medium
@@ -53,8 +54,24 @@ ApplicationWindow {
         }
     }
 
-    Node {
-        anchors.centerIn: parent
-        font: parent.font
+    // Node {
+    //     //anchors.centerIn: parent
+    //     font: parent.font
+    // }
+
+    Timeline {
+        anchors.fill: parent
     }
+
+    // Rectangle {
+    //     width: 500
+    //     height: 500
+    //     color: "red"
+    //     anchors.centerIn: parent
+    //     Rectangle {
+    //         color: "green"
+    //         anchors.fill: parent
+    //         anchors.margins: 100
+    //     }
+    // }
 }
