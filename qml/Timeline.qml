@@ -85,10 +85,7 @@ Control {
         property real offset: 0
 
         onPolygonChanged: {
-            // pathPolyline.path = polygon
-            // rec.x = pathPolyline.path[2].x - rec.width/2
-            // rec.y = pathPolyline.path[2].y - rec.height/2
-            // print(pathPolyline.path[2])
+            chain.polygon = polygon
         }
 
         Behavior on x {
@@ -99,69 +96,9 @@ Control {
             NumberAnimation { duration: 16 }
         }
 
-
-        Node {
-            id: red
-            text: "red"
-            x: -300
-            y: -100
-            onXChanged: {
-                timelineGraph.update_vertices(red.x + parent.offset, red.y + parent.offset, green.x + parent.offset, green.y + parent.offset)
-            }
-            onYChanged: {
-                timelineGraph.update_vertices(red.x + parent.offset, red.y + parent.offset, green.x + parent.offset, green.y + parent.offset)
-            }
-        }
-
-        Node {
-            id: green
-            text: "green"
-            x: 300
-            y: 100
-            onXChanged: {
-                timelineGraph.update_vertices(red.x + parent.offset, red.y + parent.offset, green.x + parent.offset, green.y + parent.offset)
-            }
-            onYChanged: {
-                timelineGraph.update_vertices(red.x + parent.offset, red.y + parent.offset, green.x + parent.offset, green.y + parent.offset)
-            }
-        }
-
-        // Shape {
-        //     z: -1
-        //     ShapePath {
-        //         id: shapePathPolyline
-        //         strokeColor: "white"
-        //         strokeWidth: 16
-        //         fillColor: "transparent"
-
-        //         PathPolyline {
-        //             id: pathPolyline
-        //         }
-        //     }
-        //     Component.onCompleted: {
-        //         timelineGraph.update_vertices(red.x + parent.offset, red.y + parent.offset, green.x + parent.offset, green.y + parent.offset)
-        //     }
-        // }
         Chain {
-
-        }
-
-        MouseArea {
-            id: rec
-            width: 100
-            height: 100
-            z: 1
-
-            drag.target: this
-
-            onReleased: {
-
-            }
-
-            Rectangle {
-                anchors.fill: parent
-                color: "red"
-            }
+            id: chain
+            z: -1
         }
     }
 
@@ -170,5 +107,9 @@ Control {
         z: -1
         anchors.fill: parent
         drag.target: timelineGraph
+        acceptedButtons: Qt.LeftButton
+        onClicked: {
+            //timelineGraph.clear_nodes()
+        }
     }
 }

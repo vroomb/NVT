@@ -53,6 +53,8 @@ qt_add_qml_module(appNVT
         launch.cpp
         timeline.hpp
         timeline.cpp
+        timeline_chain.hpp
+        timeline_chain.cpp
         # repeating_texture.hpp
         # repeating_texture.cpp
 )
