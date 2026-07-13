@@ -29,10 +29,7 @@ signals:
     void polygonChanged();
 
 protected:
-    void componentComplete() override {
-        QQuickItem::componentComplete();
-        add_node({ 300, 100 });
-    }
+    void componentComplete() override;
 
 private:
     QPolygonF m_polygon{};

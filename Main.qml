@@ -46,32 +46,17 @@ ApplicationWindow {
                 }
             }
             else {
-                // contentFrame.currentItem.keysOnPressed(event);
+                contentFrame.keysOnPressed(event);
             }
         }
         Keys.onReleased: (event) => {
-            // contentFrame.currentItem.keysOnReleased(event);
+            contentFrame.keysOnReleased(event);
         }
     }
 
-    // Node {
-    //     //anchors.centerIn: parent
-    //     font: parent.font
-    // }
-
     Timeline {
+        id: contentFrame
         anchors.fill: parent
     }
 
-    // Rectangle {
-    //     width: 500
-    //     height: 500
-    //     color: "red"
-    //     anchors.centerIn: parent
-    //     Rectangle {
-    //         color: "green"
-    //         anchors.fill: parent
-    //         anchors.margins: 100
-    //     }
-    // }
 }

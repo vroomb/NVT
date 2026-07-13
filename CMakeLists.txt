@@ -40,6 +40,7 @@ qt_add_qml_module(appNVT
         "qml/Node.qml"
         "qml/InternalWindow.qml"
         "qml/Chain.qml"
+        "qml/Pin.qml"
         # "qml/TilingTexture.qml"
     RESOURCES
         "res/svg/blue_arrow.svg"

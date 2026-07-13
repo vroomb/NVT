@@ -77,39 +77,60 @@ Control {
         }
     }
 
-    TimelineGraph {
-        id: timelineGraph
-        x: parent.width / 2
-        y: parent.height / 2
-
-        property real offset: 0
-
-        onPolygonChanged: {
-            chain.polygon = polygon
-        }
-
-        Behavior on x {
-            NumberAnimation { duration: 16 }
-        }
-
-        Behavior on y {
-            NumberAnimation { duration: 16 }
-        }
-
-        Chain {
-            id: chain
-            z: -1
-        }
-    }
-
-
     MouseArea {
-        z: -1
+        id: mouseArea
         anchors.fill: parent
         drag.target: timelineGraph
         acceptedButtons: Qt.LeftButton
-        onClicked: {
+        onClicked: event => {
             //timelineGraph.clear_nodes()
+            focus = true
+            var point = Qt.point(event.x - timelineGraph.x, event.y - timelineGraph.y);
+            var thing = chain.hit(point);
+            print(point)
+            print(thing)
+            if (thing === true) {
+                var ha = chain.hit_project(point);
+                pin.x = ha.x;
+                pin.y = ha.y;
+            }
+        }
+
+        TimelineGraph {
+            id: timelineGraph
+            x: parent.width / 2
+            y: parent.height / 2
+
+            property real offset: 0
+
+            onPolygonChanged: {
+                chain.polygon = polygon
+            }
+
+            Behavior on x {
+                NumberAnimation { duration: 16 }
+            }
+
+            Behavior on y {
+                NumberAnimation { duration: 16 }
+            }
+
+            Chain {
+                id: chain
+                z: -1
+            }
+
+            Item {
+                id: pin
+                Rectangle {
+                    width: 10
+                    height: 10
+                    radius: 5
+                    color: "red"
+                    x: -(width/2)
+                    y: -(height/2)
+                }
+            }
         }
     }
 }

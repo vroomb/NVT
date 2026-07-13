@@ -6,8 +6,8 @@ import NVTModule
 TimelineNode {
     id: root
 
-    property string text: "Judgement Day"
-    property string desc: "All of the floating islands start losing their ability to float"
+    property string text: ""
+    property string desc: ""
     property color bgcolor: "transparent"
     property color txcolor: Colors.pri
     property color hbcolor: Colors.pri
@@ -91,10 +91,14 @@ TimelineNode {
                 id: title
                 anchors.left: stationCircle.right
                 anchors.margins: 5
+                placeholderText: "Event Title"
 
-                font: root.font
                 text: root.text
                 color: root.txcolor
+
+                onTextChanged: {
+                    root.text = text
+                }
             }
 
             Rectangle {
@@ -112,10 +116,15 @@ TimelineNode {
                 anchors.left: parent.left
                 anchors.bottom: parent.bottom
                 anchors.right: parent.right
-                text: root.desc
-                placeholderText: "Details for the event."
                 anchors.margins: 10
+                placeholderText: "Details for the event."
+
+                text: root.desc
                 wrapMode: TextEdit.Wrap
+
+                onTextChanged: {
+                    root.desc = text
+                }
             }
         }
 

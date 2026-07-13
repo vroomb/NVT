@@ -6,7 +6,11 @@ TimelineChain {
     id: root
 
     onPathChanged: {
-        pathPolyline.path = root.path
+        pathPolyline.path = root.path;
+    }
+
+    onStrokeWidthChanged: {
+        shapePathPolyline.strokeWidth = root.strokeWidth
     }
 
     Shape {
@@ -14,15 +18,13 @@ TimelineChain {
         ShapePath {
             id: shapePathPolyline
             strokeColor: "white"
-            strokeWidth: 16
+            strokeWidth: root.strokeWidth
             fillColor: "transparent"
 
             PathPolyline {
                 id: pathPolyline
             }
         }
-        Component.onCompleted: {
-            //timelineGraph.update_vertices(red.x + parent.offset, red.y + parent.offset, green.x + parent.offset, green.y + parent.offset)
-        }
+        Component.onCompleted: {}
     }
 }

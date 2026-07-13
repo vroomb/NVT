@@ -1,18 +1,23 @@
 #include "timeline.hpp"
 
+void TimelineGraph::componentComplete() {
+    QQuickItem::componentComplete();
+    add_node({ 300, 100 });
+}
+
 void TimelineGraph::add_node(QPointF where) {
     auto engine = qmlEngine(this);
-    QQmlComponent comp(engine, QUrl::fromLocalFile(src_dir"qml/Node.qml"));
+    QString qml_file = src_dir"qml/Node.qml";
+    QQmlComponent comp(engine, QUrl::fromLocalFile(qml_file));
     if (comp.isError()) {
-        qWarning() << "Failed to load Node.qml:" << comp.errors();
+        qWarning() << "Failed to load " << qml_file << ": " << comp.errors();
         return;
     }
-    auto object = comp.create();
+    auto item = qobject_cast<TimelineNode*>(comp.create());
     if (comp.isError()) {
-        qWarning() << "Failed to create Node.qml:" << comp.errors();
+        qWarning() << "Failed to create " << qml_file << ": " << comp.errors();
         return;
     }
-    auto item = qobject_cast<TimelineNode*>(object);
     item->setParentItem(this);
     item->setX(where.x());
     item->setY(where.y());

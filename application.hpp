@@ -7,6 +7,7 @@
 #include <QAbstractListModel>
 #include <QtLogging>
 #include <QtQml>
+#include <QMultiMap>
 
 #include <filesystem>
 #include <iostream>
