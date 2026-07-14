@@ -15,6 +15,7 @@
 #include <string>
 #include <cmath>
 #include <format>
+#include <algorithm>
 
 #define src_dir "H:/projects/cpp/NVT/"
 #define data_dir src_dir"temp_storage/"

@@ -1,13 +1,79 @@
 #include "timeline_chain.hpp"
 
+void TimelinePin::componentComplete() {
+    QQuickItem::componentComplete();
+    // connect(this, &TimelinePin::xChanged, [this]() {
+    //         if (node() == nullptr) return;
+    //         if (abs(node()->x() - x()) < 50) setValid(true);
+    //         else                             setValid(false);
+    //     });
+    // connect(this, &TimelinePin::yChanged, [this]() {
+    //         if (node() == nullptr) return;
+    //         if (abs(node()->y() - y()) < 50) setValid(true);
+    //         else                             setValid(false);
+    //     });
+}
+
+bool TimelinePin::valid() {
+    if (node() == nullptr)
+        return true;
+    if ((abs(node()->x() - x()) < 50) && (abs(node()->y() - y()) < 50))
+        return true;
+    else
+        return false;
+}
+
+void TimelinePin::setValid(bool valid) {
+    m_valid = valid;
+    emit validChanged();
+}
+
+bool TimelinePin::accept() {
+    return m_accept;
+}
+
+void TimelinePin::setAccept(bool accept) {
+    m_accept = accept;
+    emit acceptChanged();
+}
+
+QQuickItem* TimelinePin::node() {
+    return m_node;
+}
+
+void TimelinePin::setNode(QQuickItem* node) {
+    if (m_node != nullptr) {
+        disconnect(m_node, nullptr, this, nullptr);
+    }
+
+    m_node = node;
+
+    if (m_node != nullptr) {
+        connect(m_node, &QQuickItem::xChanged, this, &TimelinePin::updateX);
+        connect(m_node, &QQuickItem::yChanged, this, &TimelinePin::updateY);
+        updateX();
+        updateY();
+    }
+}
+
+void TimelinePin::updateX() {
+    setX(m_node->x());
+}
+
+void TimelinePin::updateY() {
+    setY(m_node->y());
+}
+
 void TimelineChain::componentComplete() {
     QQuickItem::componentComplete();
 
-    start = create_pin();
-    end = create_pin();
+    m_start = create_pin();
+    m_end = create_pin();
+    m_cursor = create_pin();
 
-    end->setX(500);
-    end->setY(300);
+    m_start->setY(600);
+    m_cursor->setAccept(false);
+    m_end->setX(1000);
 
     switch (m_chainMode) {
     case horizontal:
@@ -18,6 +84,8 @@ void TimelineChain::componentComplete() {
         log("unreachable TimelineChain::componentComplete on m_chainMode = " + std::to_string(m_chainMode));
         break;
     }
+
+    connect(this, &TimelineChain::cursorEnabledChanged, this, &TimelineChain::update_polygon);
 
     update_polygon();
 }
@@ -107,7 +175,7 @@ QPointF TimelineChain::hit_project(QPointF where) {
     }
 }
 
-QQuickItem* TimelineChain::create_pin() {
+TimelinePin* TimelineChain::create_pin() {
     auto engine = qmlEngine(this);
     QString qml_file = src_dir"qml/Pin.qml";
     QQmlComponent comp(engine, QUrl::fromLocalFile(qml_file));
@@ -115,7 +183,7 @@ QQuickItem* TimelineChain::create_pin() {
         qWarning() << "Failed to load " << qml_file << ": " << comp.errors();
         return nullptr;
     }
-    auto item = qobject_cast<QQuickItem*>(comp.create());
+    auto item = qobject_cast<TimelinePin*>(comp.create());
     if (comp.isError()) {
         qWarning() << "Failed to create " << qml_file << ": " << comp.errors();
         return nullptr;
@@ -124,13 +192,60 @@ QQuickItem* TimelineChain::create_pin() {
 
     connect(item, &QQuickItem::xChanged, this, &TimelineChain::update_polygon);
     connect(item, &QQuickItem::yChanged, this, &TimelineChain::update_polygon);
+    item->setOpacity(debug_pin_opacity);
     return item;
 }
 
-QQuickItem* TimelineChain::add_pin(QQuickItem* item) {
-    pins += item;
+TimelinePin* TimelineChain::pin(QQuickItem* item) {
+    if (item == nullptr)     return nullptr;
+    if (pins.contains(item)) return pins[item];
 
-    return item;
+    auto pin = create_pin();
+    pin->setNode(item);
+
+    pins.insert(item, pin);
+    update_polygon();
+
+    connect(pin, &TimelinePin::released, this, &TimelineChain::validate);
+
+    return pin;
+}
+
+void TimelineChain::unpin(QQuickItem* item) {
+    if (pins.contains(item)) {
+        delete m_cursor;
+
+        m_cursor = pins[item];
+        m_cursor->setNode(nullptr);
+
+        pins.remove(item);
+    } else {
+        log("TimelineChain::unpin(): you tried to remove a pin that doesn't exist");
+    }
+}
+
+void TimelineChain::validate() {
+    for (auto i : pins.keys()) {
+        auto j = pins[i];
+        if (j->valid() == false)
+            unpin(i);
+        else {
+            j->updateX(); j->updateY(); 
+        }
+    }
+    update_polygon();
+}
+
+TimelinePin* TimelineChain::start() {
+    return m_start;
+}
+
+TimelinePin* TimelineChain::cursor() {
+    return m_cursor;
+}
+
+TimelinePin* TimelineChain::end() {
+    return m_end;
 }
 
 qint8 TimelineChain::chainMode() const {
@@ -183,24 +298,24 @@ void TimelineChain::setPolygon(QPolygonF polygon) {
 void TimelineChain::update_polygon() {
     QPolygonF result{};
 
-    result += {start->x(), start->y()};
+    result += {m_start->x(), m_start->y()};
+    result += {m_end->x(), m_end->y()};
 
-    // if (cursorEnabled() == true) {
-    //     if (chainMode() == horizontal) {
-    //         for (int i = 0; i < pins.length() - 1; i++) {
-    //             auto a = pins[i]->x();
-    //             auto b = pins[i+1]->x();
-    //         }
-    //     }
-    //     else {
-
-    //     }
-    // }
+    if (cursorEnabled()) result += {m_cursor->x(), m_cursor->y()};
 
     for (auto i : pins) {
         result += {i->x(), i->y()};
     }
 
+    auto mode = chainMode();
+
+    std::stable_sort(result.begin(), result.end(),
+        [mode](QPointF lhs, QPointF rhs) {
+            if (mode == horizontal) return lhs.x() < rhs.x();
+            else                    return lhs.y() < rhs.y();
+        }
+    );
+    
     setPolygon(result);
 }
 

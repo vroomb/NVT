@@ -83,29 +83,34 @@ Control {
         drag.target: timelineGraph
         acceptedButtons: Qt.LeftButton
         onClicked: event => {
-            //timelineGraph.clear_nodes()
             focus = true
+        }
+
+        onPressed: event => {
             var point = Qt.point(event.x - timelineGraph.x, event.y - timelineGraph.y);
-            var thing = chain.hit(point);
-            print(point)
-            print(thing)
-            if (thing === true) {
-                var ha = chain.hit_project(point);
-                pin.x = ha.x;
-                pin.y = ha.y;
+            if (chain.hit(point) === true) {
+                chain.cursorEnabled = true
+                chain.cursor.x = point.x
+                chain.cursor.y = point.y
+                drag.target = chain.cursor
+            }
+        }
+
+        onReleased: event => {
+            var point = Qt.point(event.x - timelineGraph.x, event.y - timelineGraph.y);
+            if (chain.cursorEnabled === true) {
+                chain.cursorEnabled = false;
+                drag.target = timelineGraph
+                chain.pin(timelineGraph.fetch_node(point));
             }
         }
 
         TimelineGraph {
             id: timelineGraph
-            x: parent.width / 2
-            y: parent.height / 2
+            x: 100
+            y: 100
 
             property real offset: 0
-
-            onPolygonChanged: {
-                chain.polygon = polygon
-            }
 
             Behavior on x {
                 NumberAnimation { duration: 16 }
@@ -118,18 +123,6 @@ Control {
             Chain {
                 id: chain
                 z: -1
-            }
-
-            Item {
-                id: pin
-                Rectangle {
-                    width: 10
-                    height: 10
-                    radius: 5
-                    color: "red"
-                    x: -(width/2)
-                    y: -(height/2)
-                }
             }
         }
     }

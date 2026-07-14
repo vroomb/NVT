@@ -8,22 +8,22 @@ class TimelineNode : public QQuickItem {
 public:
     explicit TimelineNode(QQuickItem* parent = NULL) : QQuickItem(parent) {}
 
+signals:
+    void pressed();
+    void released();
+
 private:
 };
 
 class TimelineGraph : public QQuickItem {
     Q_OBJECT
     QML_ELEMENT
-    Q_PROPERTY(QPolygonF polygon READ polygon WRITE setPolygon NOTIFY polygonChanged)
 public:
     explicit TimelineGraph(QQuickItem* parent = NULL) : QQuickItem(parent) {}
 
-    Q_INVOKABLE void update_vertices(qreal i, qreal j, qreal k, qreal l);
     Q_INVOKABLE void add_node(QPointF where);
+    Q_INVOKABLE QQuickItem* fetch_node(QPointF where);
     Q_INVOKABLE void clear_nodes();
-
-    QPolygonF polygon() const;
-    void setPolygon(QPolygonF polygon);
 
 signals:
     void polygonChanged();

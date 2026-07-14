@@ -41,7 +41,6 @@ qt_add_qml_module(appNVT
         "qml/InternalWindow.qml"
         "qml/Chain.qml"
         "qml/Pin.qml"
-        # "qml/TilingTexture.qml"
     RESOURCES
         "res/svg/blue_arrow.svg"
         "res/svg/lavender_arrow.svg"
@@ -56,8 +55,6 @@ qt_add_qml_module(appNVT
         timeline.cpp
         timeline_chain.hpp
         timeline_chain.cpp
-        # repeating_texture.hpp
-        # repeating_texture.cpp
 )
 
 set_property(TARGET appNVT PROPERTY CXX_STANDARD 23)

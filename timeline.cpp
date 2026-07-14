@@ -25,23 +25,17 @@ void TimelineGraph::add_node(QPointF where) {
     m_nodes += item;
 }
 
+QQuickItem* TimelineGraph::fetch_node(QPointF where) {
+    QQuickItem* result = nullptr;
+    for (auto i : m_nodes) {
+        if ((abs(where.x() - i->x()) < 50) && (abs(where.y() - i->y()) < 50)) result = i;
+    }
+    return result;
+}
+
 void TimelineGraph::clear_nodes() {
     for (auto i : m_nodes) {
         delete i;
     }
     m_nodes = {};
-}
-
-void TimelineGraph::update_vertices(qreal i, qreal j, qreal k, qreal l) {
-    setPolygon({ { i, j }, { k, l } });
-}
-
-QPolygonF TimelineGraph::polygon() const {
-    return m_polygon;
-}
-
-void TimelineGraph::setPolygon(QPolygonF polygon) {
-    m_polygon = polygon;
-
-    emit polygonChanged();
 }
