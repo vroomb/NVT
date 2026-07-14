@@ -1,22 +1,17 @@
-cmake_minimum_required(VERSION 3.20)
+qt_add_library(timelinelib STATIC)
 
-project(NVTtimeline VERSION 0.1 LANGUAGES CXX)
+set_target_properties(timelinelib PROPERTIES AUTOMOC ON)
+target_link_libraries(timelinelib PRIVATE Qt6::Quick)
 
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-find_package(Qt6 REQUIRED COMPONENTS Quick)
-
-qt_standard_project_setup(REQUIRES 6.10)
-
-qt_add_qml_module(timeline
-    URI NVT.timeline
+qt_add_qml_module(timelinelib
+    URI NVT.Timeline
     QML_FILES
         "qml/Chain.qml"
         "qml/Node.qml"
         "qml/Pin.qml"
         "qml/Timeline.qml"
     SOURCES
-        ../../application.hpp
+        application.hpp
         timeline_pin.hpp
         timeline_pin.cpp
         timeline_chain.hpp

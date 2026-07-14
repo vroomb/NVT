@@ -2,13 +2,12 @@ cmake_minimum_required(VERSION 3.20)
 
 project(NVT VERSION 0.1 LANGUAGES CXX)
 
+set(CMAKE_AUTOMOC ON)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt6 REQUIRED COMPONENTS Quick)
 
 qt_standard_project_setup(REQUIRES 6.10)
-
-# set(CMAKE_AUTORCC ON)
 
 if (ANDROID OR IOS)
     message(FATAL_ERROR "Platform not supported")
@@ -23,8 +22,6 @@ set_source_files_properties(qml/Colors.qml
     PROPERTIES
         QT_QML_SINGLETON_TYPE TRUE
 )
-
-add_subdirectory(src/timeline)
 
 qt_add_qml_module(appNVT
     URI NVTModule
@@ -51,10 +48,7 @@ qt_add_qml_module(appNVT
         launch.cpp
 )
 
-
-# qt_add_qml_module(appNVT
-#     URI Timeline
-# )
+add_subdirectory(NVT/timeline)
 
 set_property(TARGET appNVT PROPERTY CXX_STANDARD 23)
 
@@ -70,7 +64,7 @@ set_target_properties(appNVT PROPERTIES
 )
 
 target_link_libraries(appNVT
-    PRIVATE Qt6::Quick
+    PRIVATE Qt6::Quick timelinelib
 )
 
 install(TARGETS appNVT

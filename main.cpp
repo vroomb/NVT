@@ -1,6 +1,5 @@
 #include "application.hpp"
 #include "launch.hpp"
-#include "timeline.hpp"
 
 void log(std::string str) {
     std::ofstream o(data_dir"log.txt", std::ios::app);

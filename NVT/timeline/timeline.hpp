@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../application.hpp"
+#include "application.hpp"
 #include "timeline_node.hpp"
 #include "timeline_chain.hpp"
 

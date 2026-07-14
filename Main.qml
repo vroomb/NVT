@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls.Basic
 import NVTModule
+import NVT.Timeline
 
 ApplicationWindow {
     visible: true

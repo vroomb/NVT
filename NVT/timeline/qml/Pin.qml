@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import NVT.timeline
+import NVT.Timeline
 
 TimelinePin {
     id: root

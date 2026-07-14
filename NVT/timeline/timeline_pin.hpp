@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../application.hpp"
+#include "application.hpp"
 
 #define debug_pin_opacity 0
 

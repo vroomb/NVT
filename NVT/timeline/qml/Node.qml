@@ -1,7 +1,8 @@
 import QtQuick
 import QtQuick.Controls.Basic
 import QtQuick.Layouts
-import NVT.timeline
+import NVT.Timeline
+import NVTModule
 
 TimelineNode {
     id: root
