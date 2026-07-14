@@ -6,13 +6,7 @@ import NVTModule
 Control {
     id: root
     font.family: "Johnston ITC Std"
-    // font.bold: true
     font.pixelSize: 25
-
-    // property color bcolor: "#1f1f1f"
-    // property color pcolor: "#ceb9d9"
-    // property color scolor: "#8fd8da"
-    // property color tcolor: "#d6da8f"
 
     ContextMenu.menu: MetroContextMenu {}
 

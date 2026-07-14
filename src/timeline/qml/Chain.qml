@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Shapes
-import NVTModule
+import NVT.timeline
 
 TimelineChain {
     id: root

@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls.Basic
 import QtQuick.Shapes
-import NVTModule
+import NVT.timeline
 
 Control {
     id: root

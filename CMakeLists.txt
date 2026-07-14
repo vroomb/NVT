@@ -24,6 +24,8 @@ set_source_files_properties(qml/Colors.qml
         QT_QML_SINGLETON_TYPE TRUE
 )
 
+add_subdirectory(src/timeline)
+
 qt_add_qml_module(appNVT
     URI NVTModule
     QML_FILES
@@ -33,14 +35,10 @@ qt_add_qml_module(appNVT
         "qml/MetroContextMenu.qml"
         "qml/MetroMenuBar.qml"
         "qml/StationLabel.qml"
-        "qml/Timeline.qml"
         "qml/Station.qml"
         "qml/Launch.qml"
         "qml/Colors.qml"
-        "qml/Node.qml"
         "qml/InternalWindow.qml"
-        "qml/Chain.qml"
-        "qml/Pin.qml"
     RESOURCES
         "res/svg/blue_arrow.svg"
         "res/svg/lavender_arrow.svg"
@@ -51,11 +49,12 @@ qt_add_qml_module(appNVT
         application.hpp
         launch.hpp
         launch.cpp
-        timeline.hpp
-        timeline.cpp
-        timeline_chain.hpp
-        timeline_chain.cpp
 )
+
+
+# qt_add_qml_module(appNVT
+#     URI Timeline
+# )
 
 set_property(TARGET appNVT PROPERTY CXX_STANDARD 23)
 
