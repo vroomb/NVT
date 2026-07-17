@@ -11,7 +11,7 @@ qt_add_qml_module(timelinelib
         "qml/Pin.qml"
         "qml/Timeline.qml"
     SOURCES
-        application.hpp
+        library.hpp
         timeline_pin.hpp
         timeline_pin.cpp
         timeline_chain.hpp

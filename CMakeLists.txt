@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.20)
 
 project(NVT VERSION 0.1 LANGUAGES CXX)
 
+include("C:/Program Files/Microsoft Visual Studio/18/Community/VC/vcpkg/scripts/buildsystems/vcpkg.cmake")
+
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -49,6 +51,7 @@ qt_add_qml_module(appNVT
 )
 
 add_subdirectory(NVT/timeline)
+add_subdirectory(NVT/project)
 
 set_property(TARGET appNVT PROPERTY CXX_STANDARD 23)
 
@@ -63,8 +66,14 @@ set_target_properties(appNVT PROPERTIES
     WIN32_EXECUTABLE TRUE
 )
 
+target_include_directories(projectlib PUBLIC "vcpkg_installed/x64-windows/include")
+target_include_directories(appNVT PRIVATE NVT/project)
+# 
+# target_include_directories(timelinelib PRIVATE NVT/project)
+# target_link_libraries(timelinelib PRIVATE projectlib)
+
 target_link_libraries(appNVT
-    PRIVATE Qt6::Quick timelinelib
+    PRIVATE Qt6::Quick timelinelib projectlib
 )
 
 install(TARGETS appNVT

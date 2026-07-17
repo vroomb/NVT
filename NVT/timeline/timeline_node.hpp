@@ -1,6 +1,6 @@
 #pragma once
 
-#include "application.hpp"
+#include "library.hpp"
 
 class TimelineNode : public QQuickItem {
     Q_OBJECT

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "application.hpp"
+#include "library.hpp"
 #include "timeline_pin.hpp"
 
 class TimelineChain : public QQuickItem {

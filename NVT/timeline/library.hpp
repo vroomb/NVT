@@ -6,6 +6,8 @@
 #include <QtQml>
 #include <QMap>
 
+//#include <project.hpp>
+
 #include <string>
 #include <cmath>
 

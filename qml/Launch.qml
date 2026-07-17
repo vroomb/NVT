@@ -28,7 +28,7 @@ Control {
                 RowLayout {
                     Label {
                         text: "Open an existing story"
-                        color: root.scolor
+                        color: Colors.sec
                         font.pixelSize: 30
                     }
                     Image {
@@ -53,7 +53,7 @@ Control {
                         width: 10
                         height: parent.parent.height - 120
                         anchors.top: stationLabel1.verticalCenter
-                        color: root.scolor
+                        color: Colors.sec
                     }
                 }
 
@@ -128,7 +128,7 @@ Control {
                         width: 10
                         height: parent.parent.height - 120
                         anchors.top: stationLabel2.verticalCenter
-                        color: root.tcolor
+                        color: Colors.ter
                     }
                 }
 
@@ -167,9 +167,9 @@ Control {
 
                 StationLabel {
                     text: "Browse..."
-                    txcolor: root.pcolor
+                    txcolor: Colors.pri
                     htcolor: root.bcolor
-                    hbcolor: root.pcolor
+                    hbcolor: Colors.pri
                     font: root.font
                     buttonActiveFocusOnTab: root.buttons_active_focus_on_tab
                 }
