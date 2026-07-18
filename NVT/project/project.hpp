@@ -116,7 +116,8 @@ private:
 
 class project::project {
 public:
-	static int instantiate(fs::path location);
+	static int open(fs::path location);
+	static int close();
 	static project* instance();
 
 	std::string name();
@@ -130,6 +131,7 @@ public:
 
 private:
 	project(fs::path location);
+	~project();
 	int setLocation(fs::path location);
 
 	static project* m_instance;
@@ -138,5 +140,5 @@ private:
 	fs::path m_location;
 	fs::path m_config_dir;
 
-	SQLite::Database* db = nullptr;
+	std::unique_ptr<SQLite::Database> db = nullptr;
 };

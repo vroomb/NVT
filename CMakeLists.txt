@@ -66,7 +66,6 @@ set_target_properties(appNVT PROPERTIES
     WIN32_EXECUTABLE TRUE
 )
 
-target_include_directories(projectlib PUBLIC "vcpkg_installed/x64-windows/include")
 target_include_directories(appNVT PRIVATE NVT/project)
 # 
 # target_include_directories(timelinelib PRIVATE NVT/project)

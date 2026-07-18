@@ -1,3 +1,4 @@
+#include <project.hpp>
 #include "application.hpp"
 #include "launch.hpp"
 
@@ -29,5 +30,11 @@ int main(int argc, char *argv[]) {
         return -1;
     }
 
-    return QGuiApplication::exec();
+    project::project::open(data_dir"project1");
+
+    int r = QGuiApplication::exec();
+
+    project::project::close();
+
+    return r;
 }
