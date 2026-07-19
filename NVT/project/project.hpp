@@ -8,7 +8,7 @@ namespace fs = std::filesystem;
 typedef int epoch;
 #define epoch_min std::numeric_limits<epoch>().min()
 
-class project::entity {
+class nvt::entity {
 public:
 	entity(int id = 0) : id{ id } { reset(); }
 
@@ -29,7 +29,7 @@ private:
 	int m_chain;
 };
 
-class project::relation {
+class nvt::relation {
 public:
 	relation(std::string name) : name{ name } { reset(); }
 
@@ -45,7 +45,7 @@ public:
 	void reset();
 };
 
-class project::property {
+class nvt::property {
 public:
 	std::string field{};
 	std::variant<int, double, epoch, std::string> record{};
@@ -60,7 +60,7 @@ private:
 
 // just for clarification: linkage(husband, wife) -> wife
 // so, linkage(n1, n2) returns what n1 perceives n2 to be in relation to them
-class project::linkage : public std::set<std::tuple<relation, int, epoch, epoch>> {
+class nvt::linkage : public std::set<std::tuple<relation, int, epoch, epoch>> {
 public:
 	linkage(int n1, int n2);
 
@@ -70,7 +70,7 @@ public:
 	void reset();
 };
 
-class project::event {
+class nvt::event {
 public:
 	event(int id = 0) : id{ id } { reset(); }
 
@@ -89,7 +89,7 @@ public:
 private:
 };
 
-class project::event_chain : public std::list<event> {
+class nvt::event_chain : public std::list<event> {
 public:
 	event_chain(int id = 0) : id{ id } { reset(); }
 
@@ -100,7 +100,7 @@ public:
 	void reset();
 };
 
-class project::timeline {
+class nvt::timeline {
 public:
 	timeline(int id = 0) : id{ id } { reset(); }
 
@@ -114,7 +114,7 @@ public:
 private:
 };
 
-class project::project {
+class nvt::project {
 public:
 	static int open(fs::path location);
 	static int close();

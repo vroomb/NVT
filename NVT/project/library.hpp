@@ -7,7 +7,7 @@
 #include <filesystem>
 #include <variant>
 
-namespace project {
+namespace nvt {
 
     class property;
     class entity;

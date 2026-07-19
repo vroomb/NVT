@@ -2,7 +2,7 @@
 #include "application.hpp"
 #include "launch.hpp"
 
-void log(std::string str) {
+void nvt::log(std::string str) {
     std::ofstream o(data_dir"log.txt", std::ios::app);
     qDebug() << str;
     if (o.is_open() == false) {
@@ -13,28 +13,28 @@ void log(std::string str) {
 }
 
 int main(int argc, char *argv[]) {
-    log("New run");
+    nvt::log("New run");
 
     QGuiApplication app(argc, argv);
     QGuiApplication::setOrganizationName("vroomb");
     QGuiApplication::setApplicationName("NVT");
     QGuiApplication::setWindowIcon(QIcon(src_dir"res/svg/lavender_arrow.svg"));
 
-    LaunchModel::set_path_to_launch_list_file(data_dir"thing.txt");
+    //LaunchHandle::set_path_to_launch_list_file(data_dir"thing.txt");
 
     QQmlApplicationEngine engine;
     engine.loadFromModule("NVTModule", "Main");
 
     if (engine.rootObjects().isEmpty() == true) {
-        log("engine was empty");
+        nvt::log("engine was empty");
         return -1;
     }
 
-    project::project::open(data_dir"project1");
+    nvt::project::open(data_dir"project1");
 
     int r = QGuiApplication::exec();
 
-    project::project::close();
+    nvt::project::close();
 
     return r;
 }

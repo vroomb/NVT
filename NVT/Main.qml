@@ -3,6 +3,7 @@ import QtQuick.Layouts
 import QtQuick.Controls.Basic
 import NVTModule
 import NVT.Timeline
+import NVT.Launch
 
 ApplicationWindow {
     visible: true
@@ -10,11 +11,11 @@ ApplicationWindow {
 
     FontLoader {
         id: johnston_medium
-        source: "res/johnston-itc/johnston-itc-std-medium.otf"
+        source: "../res/johnston-itc/johnston-itc-std-medium.otf"
     }
     FontLoader {
         id: johnston_bold
-        source: "res/johnston-itc/johnston-itc-std-bold.otf"
+        source: "../res/johnston-itc/johnston-itc-std-bold.otf"
     }
 
     font.family: "Johnston ITC Std"
@@ -55,9 +56,13 @@ ApplicationWindow {
         }
     }
 
-    Timeline {
+    // Timeline {
+    //     id: contentFrame
+    //     anchors.fill: parent
+    // }
+
+    Launch {
         id: contentFrame
         anchors.fill: parent
     }
-
 }

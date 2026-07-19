@@ -17,7 +17,7 @@ void TimelineChain::componentComplete() {
     case vertical:
         break;
     default:
-        log("unreachable TimelineChain::componentComplete on m_chainMode = " + std::to_string(m_chainMode));
+        nvt::log("unreachable TimelineChain::componentComplete on m_chainMode = " + std::to_string(m_chainMode));
         break;
     }
 
@@ -156,7 +156,7 @@ void TimelineChain::unpin(QQuickItem* item) {
 
         pins.remove(item);
     } else {
-        log("TimelineChain::unpin(): you tried to remove a pin that doesn't exist");
+        nvt::log("TimelineChain::unpin(): you tried to remove a pin that doesn't exist");
     }
 }
 

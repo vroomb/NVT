@@ -32,7 +32,7 @@ Menu {
             width: 20
             height: 20
             visible: menuItem.subMenu
-            source: "../res/svg/blue_arrow.svg"
+            source: "../../res/svg/blue_arrow.svg"
         }
 
         indicator: Item {

@@ -1,8 +1,8 @@
 #include "project.hpp"
 
-project::project* project::project::m_instance = nullptr;
+nvt::project* nvt::project::m_instance = nullptr;
 
-project::project::project(fs::path location) :
+nvt::project::project(fs::path location) :
     m_location{ location },
     m_config_dir{ location / ".nvt" }
 {
@@ -19,9 +19,9 @@ project::project::project(fs::path location) :
     m_name = location.filename().string();
 }
 
-project::project::~project() {}
+nvt::project::~project() {}
 
-int project::project::open(fs::path location) {
+int nvt::project::open(fs::path location) {
     if (m_instance != nullptr) {
         std::cout << "don't instantiate project twice.\n";
         return -1;
@@ -31,7 +31,7 @@ int project::project::open(fs::path location) {
     return 0;
 }
 
-int project::project::close() {
+int nvt::project::close() {
     if (m_instance == nullptr) {
         return -1;
     } else {
@@ -40,10 +40,10 @@ int project::project::close() {
     }
 }
 
-project::project* project::project::instance() {
+nvt::project* nvt::project::instance() {
     return m_instance;
 }
 
-std::string project::project::name() {
+std::string nvt::project::name() {
     return m_name;
 }

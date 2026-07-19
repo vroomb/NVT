@@ -19,4 +19,7 @@
 #define max(x, y) (((x) > (y)) ? (x) : (y))
 #define sgn(x) ((x > 0) ? 1 : ((x < 0) ? -1 : 0))
 
-void log(std::string str);
+namespace nvt {
+	void log(std::string str);
+}
+

@@ -69,8 +69,11 @@ Control {
                         ListView {
                             boundsBehavior: Flickable.StopAtBounds
                             id: listView
-                            model: LaunchModel {
-                                id: thing
+                            model: ListModel {
+                                ListElement {
+                                    name: "What"
+                                    location: "hey"
+                                }
                             }
                             delegate: Row {
                                 required property string name
@@ -168,7 +171,7 @@ Control {
                 StationLabel {
                     text: "Browse..."
                     txcolor: Colors.pri
-                    htcolor: root.bcolor
+                    htcolor: Colors.bse
                     hbcolor: Colors.pri
                     font: root.font
                     buttonActiveFocusOnTab: root.buttons_active_focus_on_tab

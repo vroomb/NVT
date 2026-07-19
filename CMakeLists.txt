@@ -17,10 +17,12 @@ if (ANDROID OR IOS)
 endif()
 
 qt_add_executable(appNVT
-    main.cpp
+    NVT/main.cpp
+    NVT/application.hpp
+    NVT/application.cpp
 )
 
-set_source_files_properties(qml/Colors.qml
+set_source_files_properties(NVT/qml/Colors.qml
     PROPERTIES
         QT_QML_SINGLETON_TYPE TRUE
 )
@@ -28,16 +30,15 @@ set_source_files_properties(qml/Colors.qml
 qt_add_qml_module(appNVT
     URI NVTModule
     QML_FILES
-        "Main.qml"
-        "qml/LoadPage.ui.qml"
-        "qml/MetroButton.qml"
-        "qml/MetroContextMenu.qml"
-        "qml/MetroMenuBar.qml"
-        "qml/StationLabel.qml"
-        "qml/Station.qml"
-        "qml/Launch.qml"
-        "qml/Colors.qml"
-        "qml/InternalWindow.qml"
+        "NVT/Main.qml"
+        "NVT/qml/LoadPage.ui.qml"
+        "NVT/qml/MetroButton.qml"
+        "NVT/qml/MetroContextMenu.qml"
+        "NVT/qml/MetroMenuBar.qml"
+        "NVT/qml/StationLabel.qml"
+        "NVT/qml/Station.qml"
+        "NVT/qml/Colors.qml"
+        "NVT/qml/InternalWindow.qml"
     RESOURCES
         "res/svg/blue_arrow.svg"
         "res/svg/lavender_arrow.svg"
@@ -45,13 +46,12 @@ qt_add_qml_module(appNVT
         "res/johnston-itc/johnston-itc-std-bold.otf"
         "res/johnston-itc/johnston-itc-std-medium.otf"
     SOURCES
-        application.hpp
-        launch.hpp
-        launch.cpp
+        "NVT/application.hpp"
 )
 
 add_subdirectory(NVT/timeline)
 add_subdirectory(NVT/project)
+add_subdirectory(NVT/launch)
 
 set_property(TARGET appNVT PROPERTY CXX_STANDARD 23)
 
@@ -72,7 +72,7 @@ target_include_directories(appNVT PRIVATE NVT/project)
 # target_link_libraries(timelinelib PRIVATE projectlib)
 
 target_link_libraries(appNVT
-    PRIVATE Qt6::Quick timelinelib projectlib
+    PRIVATE Qt6::Quick timelinelib projectlib launchlib
 )
 
 install(TARGETS appNVT

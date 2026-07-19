@@ -4,7 +4,7 @@ void TimelineGraph::componentComplete() {
     QQuickItem::componentComplete();
     add_node({ 300, 100 });
 
-    //project::project::instantiate(data_dir"project1/");
+    //nvt::project::instantiate(data_dir"project1/");
 }
 
 void TimelineGraph::add_node(QPointF where) {
