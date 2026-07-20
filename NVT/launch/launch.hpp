@@ -3,6 +3,7 @@
 #include <QQuickItem>
 #include <fstream>
 #include <nlohmann/json.hpp>
+#include <format>
 #include "launch_handle.hpp"
 
 // TODO: Turn this into a QSet based thing

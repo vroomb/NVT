@@ -1,182 +1,215 @@
 import QtQuick
 import QtQuick.Layouts
+import QtQuick.Dialogs
 import QtQuick.Controls.Basic
 import NVTModule
+import NVT.Launch
 
 Control {
     id: root
     font.family: "Johnston ITC Std"
-    font.pixelSize: 25
+    font.pixelSize: 20
 
     ContextMenu.menu: MetroContextMenu {}
 
     property bool buttons_active_focus_on_tab: true
 
     padding: 30
+    bottomPadding: padding + footer.height
     background: Rectangle {
-        color: "#1f1f1f"
+        color: "#111"
     }
-    contentItem: ColumnLayout {
-        Label {
-            text: "NVT"
-            color: Colors.pri
-            font.pixelSize: 30
-        }
-        RowLayout {
-            ColumnLayout {
-                spacing: 0
-                RowLayout {
-                    Label {
-                        text: "Open an existing story"
-                        color: Colors.sec
-                        font.pixelSize: 30
-                    }
-                    Image {
-                        Layout.preferredHeight: 30
-                        Layout.preferredWidth: 30
-                        source: "../res/svg/blue_arrow.svg"
-                        fillMode: Image.Stretch
-                    }
-                }
-                StationLabel {
-                    id: stationLabel1
-                    text: "Find..."
-                    txcolor: Colors.pri
-                    htcolor: Colors.bse
-                    hbcolor: Colors.pri
-                    font: root.font
-                    buttonActiveFocusOnTab: root.buttons_active_focus_on_tab
+    contentItem: LaunchList {
+        GridLayout {
+            columns: 2
+            anchors.fill: parent
 
-                    Rectangle {
-                        x: 35
-                        z: -1
-                        width: 10
-                        height: parent.parent.height - 120
-                        anchors.top: stationLabel1.verticalCenter
-                        color: Colors.sec
-                    }
+            Control {
+                padding: 5
+                Layout.fillWidth: true
+                contentItem: TextField {
+                    background: Item {}
                 }
+                background: Rectangle {
+                    color: "transparent"
 
-                Item {
-                    Layout.fillWidth: true
-                    Layout.fillHeight: true
-                    ScrollView {
-                        clip: true
-                        height: (parent.height - (parent.height % 80))
-                        anchors.top: parent.top
-                        anchors.left: parent.left
-                        anchors.right: parent.right
-                        ListView {
-                            boundsBehavior: Flickable.StopAtBounds
-                            id: listView
-                            model: ListModel {
-                                ListElement {
-                                    name: "What"
-                                    location: "hey"
-                                }
-                            }
-                            delegate: Row {
-                                required property string name
-                                required property string location
-                                StationLabel {
-                                    id: storyTile
-                                    txcolor: "#ffffff"
-                                    text: name + "\n" + location
-                                    hbcolor: "white"
-                                    htcolor: "black"
-                                    font: root.font
-                                    buttonActiveFocusOnTab: root.buttons_active_focus_on_tab
-                                }
-                            }
-                        }
-                    }
-                }
-
-                StationLabel {
-                    text: "Browse..."
-                    txcolor: Colors.pri
-                    htcolor: Colors.bse
-                    hbcolor: Colors.pri
-                    font: root.font
-                    buttonActiveFocusOnTab: root.buttons_active_focus_on_tab
+                    radius: 10
+                    border.color: "#1f1f1f"
+                    border.width: 2
                 }
             }
-            ColumnLayout {
-                spacing: 0
-                RowLayout {
-                    Label {
+
+            Control {
+                id: createPanel
+                padding: 5
+                contentItem: ColumnLayout {
+                    StationLabel {
+                        font: createPanel.font
                         text: "Create a new story"
-                        color: "#d6da8f"
-                        font.pixelSize: 30
+                        space: 2
+                        txcolor: Colors.ter
+                        hbcolor: Colors.ter
+                        htcolor: "#111"
+                        circleDia: 24
+                        borderWidth: 3
                     }
-                    Image {
-                        Layout.preferredHeight: 30
-                        Layout.preferredWidth: 30
-                        source: "../res/svg/yellow_arrow.svg"
-                        fillMode: Image.Stretch
+                    StationLabel {
+                        font: createPanel.font
+                        text: "Add an existing story"
+                        space: 2
+                        txcolor: Colors.ter
+                        hbcolor: Colors.ter
+                        htcolor: "#111"
+                        circleDia: 24
+                        borderWidth: 3
+
+                        onClicked: {
+                            fileDialog.open()
+                        }
+
+                        FileDialog {
+                            id: fileDialog
+                        }
                     }
                 }
-                StationLabel {
-                    id: stationLabel2
-                    text: "Find..."
-                    txcolor: Colors.pri
-                    htcolor: Colors.bse
-                    hbcolor: Colors.pri
-                    font: root.font
-                    buttonActiveFocusOnTab: root.buttons_active_focus_on_tab
+                Layout.rowSpan: 2
+                Layout.minimumWidth: 200
+            }
 
-                    Rectangle {
-                        x: 35
-                        z: -1
-                        width: 10
-                        height: parent.parent.height - 120
-                        anchors.top: stationLabel2.verticalCenter
-                        color: Colors.ter
-                    }
-                }
+            Control {
+                id: openPanel
 
-                Item {
-                    Layout.fillWidth: true
-                    Layout.fillHeight: true
-                    ScrollView {
-                        clip: true
-                        height: (parent.height - (parent.height % 80))
-                        anchors.top: parent.top
+                Layout.fillHeight: true
+                Layout.fillWidth: true
+
+                contentItem: ScrollView {
+                    ColumnLayout {
+                        id: projectList
+
+                        spacing: -10
                         anchors.left: parent.left
                         anchors.right: parent.right
-                        ListView {
-                            boundsBehavior: Flickable.StopAtBounds
-                            id: listView2
-                            model: ListModel {
-                                ListElement {
-                                    name: "What"
-                                }
-                            }
-                            delegate: Row {
-                                required property string name
-                                StationLabel {
-                                    id: storyTile2
-                                    txcolor: "#ffffff"
-                                    text: name
-                                    hbcolor: "white"
-                                    htcolor: "black"
-                                    font: root.font
-                                    buttonActiveFocusOnTab: root.buttons_active_focus_on_tab
-                                }
-                            }
+
+                        StationLabel {
+                            font: openPanel.font
+                            text: "Story1\n/path/to/story1"
+                            space: 2
+                            txcolor: Colors.sec
+                            hbcolor: Colors.sec
+                            htcolor: "#111"
+                            circleDia: 24
+                            borderWidth: 3
+                        }
+                        StationLabel {
+                            font: openPanel.font
+                            text: "Story2\n/path/to/story2"
+                            space: 2
+                            txcolor: Colors.sec
+                            hbcolor: Colors.sec
+                            htcolor: "#111"
+                            circleDia: 24
+                            borderWidth: 3
+                        }
+                        StationLabel {
+                            font: openPanel.font
+                            text: "Story1\n/path/to/story1"
+                            space: 2
+                            txcolor: Colors.sec
+                            hbcolor: Colors.sec
+                            htcolor: "#111"
+                            circleDia: 24
+                            borderWidth: 3
+                        }
+                        StationLabel {
+                            font: openPanel.font
+                            text: "Story2\n/path/to/story2"
+                            space: 2
+                            txcolor: Colors.sec
+                            hbcolor: Colors.sec
+                            htcolor: "#111"
+                            circleDia: 24
+                            borderWidth: 3
+                        }
+                        StationLabel {
+                            font: openPanel.font
+                            text: "Story1\n/path/to/story1"
+                            space: 2
+                            txcolor: Colors.sec
+                            hbcolor: Colors.sec
+                            htcolor: "#111"
+                            circleDia: 24
+                            borderWidth: 3
+                        }
+                        StationLabel {
+                            font: openPanel.font
+                            text: "Story2\n/path/to/story2"
+                            space: 2
+                            txcolor: Colors.sec
+                            hbcolor: Colors.sec
+                            htcolor: "#111"
+                            circleDia: 24
+                            borderWidth: 3
+                        }
+                        StationLabel {
+                            font: openPanel.font
+                            text: "Story1\n/path/to/story1"
+                            space: 2
+                            txcolor: Colors.sec
+                            hbcolor: Colors.sec
+                            htcolor: "#111"
+                            circleDia: 24
+                            borderWidth: 3
+                        }
+                        StationLabel {
+                            font: openPanel.font
+                            text: "Story2\n/path/to/story2"
+                            space: 2
+                            txcolor: Colors.sec
+                            hbcolor: Colors.sec
+                            htcolor: "#111"
+                            circleDia: 24
+                            borderWidth: 3
                         }
                     }
                 }
 
-                StationLabel {
-                    text: "Browse..."
-                    txcolor: Colors.pri
-                    htcolor: Colors.bse
-                    hbcolor: Colors.pri
-                    font: root.font
-                    buttonActiveFocusOnTab: root.buttons_active_focus_on_tab
+                background: Rectangle {
+                    color: "transparent"
+
+                    radius: 10
+                    border.color: "#1f1f1f"
+                    border.width: 2
                 }
             }
         }
+    }
+
+    Control {
+        id: footer
+        height: 70
+        anchors.left: root.left
+        anchors.right: root.right
+        anchors.bottom: root.bottom
+
+        RowLayout {
+            anchors.leftMargin: 20
+            anchors.left: parent.left
+            anchors.verticalCenter: parent.verticalCenter
+            Label {
+                text: "NVT"
+                color: Colors.pri
+                font.pixelSize: 35
+            }
+
+            Label {
+                text: "v0.0.1"
+                color: Colors.pri
+                font.family: "Josefin Sans"
+                font.pixelSize: 25
+                Layout.topMargin: 10
+            }
+        }
+
+        background: Rectangle { color: "#090909" }
     }
 }

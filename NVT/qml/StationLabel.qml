@@ -21,27 +21,37 @@ Control {
     property color lineColorEnd: "transparent"
     property int lineWidth: 10
     property int circleDia: 40
+    property real borderWidth: 5
+    property real space: 5
 
     font.family: "Johnson ITC Std"
     font.pixelSize: 20
     padding: 20
 
+    signal clicked();
+
     MouseArea {
         id: mouseArea
         anchors.fill: parent
         hoverEnabled: true
+        acceptedButtons: Qt.LeftButton
+        onClicked: {
+            root.clicked();
+            metroButton.onClicked();
+        }
         onEntered: {
             metroButton.highlight = true;
             metroButton.onEntered();
         }
         onExited: {
             metroButton.highlight = false;
-            metroButton.onExited()
+            metroButton.onExited();
         }
     }
 
     contentItem: RowLayout {
         id: rowLayout
+        spacing: root.space
 
         Item {
             Layout.rightMargin: 10
@@ -54,11 +64,10 @@ Control {
                 z: 1
                 color: root.stationInsideColor
                 radius: root.circleDia / 2
-                border.width: 5
+                border.width: root.borderWidth
                 border.color: root.stationOutlineColor
             }
         }
-
 
         MetroButton {
             id: metroButton

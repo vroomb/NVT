@@ -5,15 +5,18 @@ void LaunchList::addProject(LaunchHandle handle) {
 }
 
 LaunchList::LaunchList(QQuickItem* parent) : QQuickItem(parent) {
-    // nlohmann::json j =
-    //     nlohmann::json::parse(std::ifstream(LaunchHandle::path_to_launch_list_file()))["projects"];
+    auto i = std::ifstream(LaunchHandle::path_to_launch_list_file());
 
-    // if (j.is_array() == true) {
-    //     for (auto i : j["projects"]) {
-    //         if ((i["name"].is_string() == false) && (i["location"].is_string() == false))
-    //             addProject({ i["name"], i["location"] });
-    //     }
-    // }
+    if (i.is_open() == true) {
+        nlohmann::json j = nlohmann::json::parse(i)["projects"];
+
+        if (j.is_array() == true) {
+            for (auto i : j["projects"]) {
+                if ((i["name"].is_string() == false) && (i["location"].is_string() == false))
+                    addProject({ i["name"], i["location"] });
+            }
+        }
+    }
 }
 
 QString LaunchList::launchLocation() {
@@ -26,17 +29,16 @@ void LaunchList::setLaunchLocation(QString l) {
 }
 
 std::string LaunchList::generate_launch_list_file() {
-    // nlohmann::json j =
-    //     nlohmann::json::parse(std::ifstream(LaunchHandle::path_to_launch_list_file()));
+    nlohmann::json j =
+        nlohmann::json::parse(std::ifstream(LaunchHandle::path_to_launch_list_file()));
 
-    // j["projects"].clear();
-    // for (auto i : m_handles) {
-    //     j["projects"]["name"]     = i.name().toStdString();
-    //     j["projects"]["location"] = i.location().toStdString();
-    // }
+    j["projects"].clear();
+    for (auto i : m_handles) {
+        j["projects"]["name"]     = i.name().toStdString();
+        j["projects"]["location"] = i.location().toStdString();
+    }
 
-    // return std::format("{}", j);
-    return "";
+    return j.dump(2);
 }
 
 void LaunchList::overwrite_launch_list_file() {
@@ -49,5 +51,5 @@ void LaunchList::overwrite_launch_list_file() {
             << LaunchHandle::path_to_launch_list_file() << "\" not found or is busy.";
         return;
     }
-    o << std::setw(2) << s;
+    o << s;
 }

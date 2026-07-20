@@ -12,8 +12,10 @@ set_target_properties(launchlib
 )
 
 target_include_directories(launchlib PUBLIC .)
-target_link_libraries(launchlib PRIVATE Qt6::Quick)
-target_link_libraries(launchlib PUBLIC nlohmann_json::nlohmann_json)
+target_link_libraries(launchlib
+	PRIVATE Qt6::Quick
+	PUBLIC nlohmann_json::nlohmann_json
+)
 
 qt_add_qml_module(launchlib
 	URI NVT.Launch

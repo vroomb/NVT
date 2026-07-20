@@ -7,7 +7,7 @@ import NVT.Launch
 
 ApplicationWindow {
     visible: true
-    visibility: Window.Maximized
+    // visibility: Window.Maximized
 
     FontLoader {
         id: johnston_medium
@@ -21,8 +21,8 @@ ApplicationWindow {
     font.family: "Johnston ITC Std"
     font.pixelSize: 25
 
-    minimumWidth: 1280
-    minimumHeight: 720
+    width: 960
+    height: 540
 
     background: Rectangle {
         color: "#111"

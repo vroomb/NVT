@@ -20,8 +20,6 @@ int main(int argc, char *argv[]) {
     QGuiApplication::setApplicationName("NVT");
     QGuiApplication::setWindowIcon(QIcon(src_dir"res/svg/lavender_arrow.svg"));
 
-    //LaunchHandle::set_path_to_launch_list_file(data_dir"thing.txt");
-
     QQmlApplicationEngine engine;
     engine.loadFromModule("NVTModule", "Main");
 
