@@ -2,6 +2,8 @@
 
 #include "launch.hpp"
 
+using time_point = std::chrono::time_point<std::chrono::steady_clock>;
+
 class LaunchHandle {
 public:
     static void set_path_to_launch_list_file(std::string);
@@ -17,6 +19,15 @@ public:
         return m_location;
     }
 
+    void setParent(QQuickItem* parent) {
+        if (m_item != nullptr) m_item->setParentItem(parent);
+    }
+
+    void setVisible(bool v) {
+        if (m_item != nullptr) m_item->setVisible(v);
+    }
+
+    time_point m_last_updated{};
 private:
     QString m_name;
     QString m_location;

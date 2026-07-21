@@ -21,6 +21,23 @@ Control {
     }
     contentItem: LaunchList {
         id: launchList
+
+        projectListItem: projectList
+        projectListComponent: StationLabel {
+            property string name: "name"
+            property string location: "location"
+
+            font.family: "Johnston ITC Std"
+            font.pixelSize: 20
+            text: name + "\n" + location
+            space: 2
+            txcolor: Colors.sec
+            hbcolor: Colors.sec
+            htcolor: "#111"
+            circleDia: 24
+            borderWidth: 3
+        }
+
         GridLayout {
             columns: 2
             anchors.fill: parent
@@ -29,7 +46,12 @@ Control {
                 padding: 5
                 Layout.fillWidth: true
                 contentItem: TextField {
+                    id: textField
                     background: Item {}
+
+                    onTextChanged: {
+                        launchList.find(this.text)
+                    }
                 }
                 background: Rectangle {
                     color: "transparent"
@@ -90,17 +112,6 @@ Control {
                         spacing: -10
                         anchors.left: parent.left
                         anchors.right: parent.right
-
-                        // StationLabel {
-                        //     font: openPanel.font
-                        //     text: name + "\n" + location
-                        //     space: 2
-                        //     txcolor: Colors.sec
-                        //     hbcolor: Colors.sec
-                        //     htcolor: "#111"
-                        //     circleDia: 24
-                        //     borderWidth: 3
-                        // }
                     }
                 }
 

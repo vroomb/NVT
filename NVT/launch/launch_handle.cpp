@@ -14,9 +14,6 @@ LaunchHandle::LaunchHandle(QString name, QString location, QQmlComponent* compon
     m_name{ name },
     m_location{ location }
 {
-    if (component->isError()) {
-        qWarning() << "LaunchHandle::LaunchHandle(): " << component->errors();
-    }
     m_item = std::unique_ptr<QQuickItem>(qobject_cast<QQuickItem*>(component->create()));
     if (component->isError()) {
         qWarning() << "LaunchHandle::LaunchHandle(): " << component->errors();

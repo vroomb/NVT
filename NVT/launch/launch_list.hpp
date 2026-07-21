@@ -2,7 +2,10 @@
 
 #include "launch.hpp"
 
-// TODO: Turn this into a QSet based thing
+namespace cr = std::chrono;
+using time_point = cr::time_point<cr::steady_clock>;
+using seconds = cr::seconds;
+
 class LaunchList : public QQuickItem {
     Q_OBJECT
     QML_ELEMENT
@@ -26,6 +29,7 @@ class LaunchList : public QQuickItem {
 
 public:
     explicit LaunchList(QQuickItem* parent = NULL);
+    ~LaunchList();
 
     // create new contents for list file
     std::string generate_launch_list_file();
@@ -39,10 +43,15 @@ public:
     QQmlComponent* projectListComponent();
     void setProjectListComponent(QQmlComponent* l);
 
-    Q_INVOKABLE void addProject(QString name, QString location);
+    LaunchHandle* project(QString location);
+
+    Q_INVOKABLE void addProject(QString name, QString location, time_point tp);
+    Q_INVOKABLE void removeProject(QString location);
 
     // overwrite previous contents with updated ones
     Q_INVOKABLE void overwrite_launch_list_file();
+
+    Q_INVOKABLE void find(QString text);
 
 signals:
     void launchLocationChanged();
@@ -54,7 +63,7 @@ protected:
     void componentComplete() override;
 
 private:
-    QSet<LaunchHandle> m_handles{};
+    QSet<LaunchHandle*> m_handles{};
 
     QString m_launchLocation{};
     QQuickItem* m_projectListItem{};
