@@ -14,6 +14,8 @@ Control {
 
     property bool buttons_active_focus_on_tab: true
 
+    signal launchRequested(location: string);
+
     padding: 30
     bottomPadding: padding + footer.height
     background: Rectangle {
@@ -22,6 +24,8 @@ Control {
     contentItem: LaunchList {
         id: launchList
 
+        onLaunchRequested: root.launchRequested();
+
         projectListItem: projectList
         projectListComponent: StationLabel {
             property string name: "name"
@@ -29,13 +33,29 @@ Control {
 
             font.family: "Johnston ITC Std"
             font.pixelSize: 20
+
             text: name + "\n" + location
             space: 2
             txcolor: Colors.sec
             hbcolor: Colors.sec
             htcolor: "#111"
+            padding: 7
+            leftPadding: 20
             circleDia: 24
             borderWidth: 3
+            Layout.fillWidth: true
+
+            onEntered: {
+                bgOpacity = 0.05
+            }
+
+            onExited: {
+                bgOpacity = 0
+            }
+
+            onClicked: {
+                parent.launchRequested(location)
+            }
         }
 
         GridLayout {
@@ -105,13 +125,21 @@ Control {
                 Layout.fillHeight: true
                 Layout.fillWidth: true
 
+                padding: 10
+
                 contentItem: ScrollView {
+                    id: scrollView
                     ColumnLayout {
                         id: projectList
+                        spacing: 0
 
-                        spacing: -10
-                        anchors.left: parent.left
-                        anchors.right: parent.right
+                        function launchRequested(location: string) {
+                            root.launchRequested(location)
+                        }
+
+                        Item {
+                            Layout.preferredWidth: scrollView.width
+                        }
                     }
                 }
 

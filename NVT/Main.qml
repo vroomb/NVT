@@ -6,6 +6,7 @@ import NVT.Timeline
 import NVT.Launch
 
 ApplicationWindow {
+    id: root
     visible: true
     // visibility: Window.Maximized
 
@@ -64,5 +65,9 @@ ApplicationWindow {
     Launch {
         id: contentFrame
         anchors.fill: parent
+        onLaunchRequested: (location) => {
+            print(location)
+            root.close();
+        }
     }
 }

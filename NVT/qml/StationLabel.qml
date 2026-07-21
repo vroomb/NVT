@@ -24,11 +24,16 @@ Control {
     property real borderWidth: 5
     property real space: 5
 
+    property alias bgOpacity: bg.opacity
+
     font.family: "Johnson ITC Std"
     font.pixelSize: 20
     padding: 20
 
     signal clicked();
+    signal entered();
+    signal exited();
+    signal doubleClicked();
 
     MouseArea {
         id: mouseArea
@@ -40,17 +45,21 @@ Control {
             metroButton.onClicked();
         }
         onEntered: {
+            root.entered()
             metroButton.highlight = true;
             metroButton.onEntered();
         }
         onExited: {
+            root.exited()
             metroButton.highlight = false;
             metroButton.onExited();
+        }
+        onDoubleClicked: {
+            root.doubleClicked();
         }
     }
 
     contentItem: RowLayout {
-        id: rowLayout
         spacing: root.space
 
         Item {
@@ -81,5 +90,16 @@ Control {
             activeFocusOnTab: root.buttonActiveFocusOnTab
             hover: false
         }
+
+        Item {
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+        }
+    }
+
+    background: Rectangle {
+        id: bg
+        opacity: 0
+        radius: 15
     }
 }
