@@ -1,10 +1,9 @@
-#include "launch.hpp"
-
-void LaunchList::addProject(LaunchHandle handle) {
-    m_handles.append(handle);
-}
+#include "launch_list.hpp"
+#include "launch_handle.hpp"
 
 LaunchList::LaunchList(QQuickItem* parent) : QQuickItem(parent) {
+    LaunchHandle::set_path_to_launch_list_file("H:/Projects/cpp/NVT/temp_storage/config.json");
+
     auto i = std::ifstream(LaunchHandle::path_to_launch_list_file());
 
     if (i.is_open() == true) {
@@ -12,11 +11,38 @@ LaunchList::LaunchList(QQuickItem* parent) : QQuickItem(parent) {
 
         if (j.is_array() == true) {
             for (auto i : j["projects"]) {
-                if ((i["name"].is_string() == false) && (i["location"].is_string() == false))
-                    addProject({ i["name"], i["location"] });
+                if ((i["name"].is_string() == true) && (i["location"].is_string() == true))
+                    addProject(QString::fromStdString(i["name"]), QString::fromStdString(i["location"]));
             }
         }
     }
+}
+
+void LaunchList::componentComplete() {
+    QQuickItem::componentComplete();
+}
+
+QQuickItem* LaunchList::projectListItem() {
+    return m_projectListItem;
+}
+
+void LaunchList::setProjectListItem(QQuickItem* l) {
+    m_projectListItem = l;
+    emit projectListItemChanged();
+}
+
+QQmlComponent* LaunchList::projectListComponent() {
+    return m_projectListComponent.get();
+}
+
+void LaunchList::setProjectListComponent(QQmlComponent* l) {
+    m_projectListComponent = std::unique_ptr<QQmlComponent>(l);
+    emit projectListComponentChanged();
+}
+
+
+void LaunchList::addProject(QString name, QString location) {
+    m_handles.insert({ location, name, projectListComponent()});
 }
 
 QString LaunchList::launchLocation() {
@@ -33,7 +59,7 @@ std::string LaunchList::generate_launch_list_file() {
         nlohmann::json::parse(std::ifstream(LaunchHandle::path_to_launch_list_file()));
 
     j["projects"].clear();
-    for (auto i : m_handles) {
+    for (auto &i : m_handles) {
         j["projects"]["name"]     = i.name().toStdString();
         j["projects"]["location"] = i.location().toStdString();
     }

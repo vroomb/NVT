@@ -29,7 +29,8 @@ qt_add_qml_module(launchlib
         "../../res/johnston-itc/johnston-itc-std-medium.otf"
 	SOURCES
 		launch.hpp
-		launch.cpp
 		launch_handle.hpp
 		launch_handle.cpp
+		launch_list.hpp
+		launch_list.cpp
 )

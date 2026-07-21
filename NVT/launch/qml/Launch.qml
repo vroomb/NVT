@@ -20,6 +20,7 @@ Control {
         color: "#111"
     }
     contentItem: LaunchList {
+        id: launchList
         GridLayout {
             columns: 2
             anchors.fill: parent
@@ -64,11 +65,11 @@ Control {
                         borderWidth: 3
 
                         onClicked: {
-                            fileDialog.open()
+                            folderDialog.open()
                         }
 
-                        FileDialog {
-                            id: fileDialog
+                        FolderDialog {
+                            id: folderDialog
                         }
                     }
                 }
@@ -90,86 +91,16 @@ Control {
                         anchors.left: parent.left
                         anchors.right: parent.right
 
-                        StationLabel {
-                            font: openPanel.font
-                            text: "Story1\n/path/to/story1"
-                            space: 2
-                            txcolor: Colors.sec
-                            hbcolor: Colors.sec
-                            htcolor: "#111"
-                            circleDia: 24
-                            borderWidth: 3
-                        }
-                        StationLabel {
-                            font: openPanel.font
-                            text: "Story2\n/path/to/story2"
-                            space: 2
-                            txcolor: Colors.sec
-                            hbcolor: Colors.sec
-                            htcolor: "#111"
-                            circleDia: 24
-                            borderWidth: 3
-                        }
-                        StationLabel {
-                            font: openPanel.font
-                            text: "Story1\n/path/to/story1"
-                            space: 2
-                            txcolor: Colors.sec
-                            hbcolor: Colors.sec
-                            htcolor: "#111"
-                            circleDia: 24
-                            borderWidth: 3
-                        }
-                        StationLabel {
-                            font: openPanel.font
-                            text: "Story2\n/path/to/story2"
-                            space: 2
-                            txcolor: Colors.sec
-                            hbcolor: Colors.sec
-                            htcolor: "#111"
-                            circleDia: 24
-                            borderWidth: 3
-                        }
-                        StationLabel {
-                            font: openPanel.font
-                            text: "Story1\n/path/to/story1"
-                            space: 2
-                            txcolor: Colors.sec
-                            hbcolor: Colors.sec
-                            htcolor: "#111"
-                            circleDia: 24
-                            borderWidth: 3
-                        }
-                        StationLabel {
-                            font: openPanel.font
-                            text: "Story2\n/path/to/story2"
-                            space: 2
-                            txcolor: Colors.sec
-                            hbcolor: Colors.sec
-                            htcolor: "#111"
-                            circleDia: 24
-                            borderWidth: 3
-                        }
-                        StationLabel {
-                            font: openPanel.font
-                            text: "Story1\n/path/to/story1"
-                            space: 2
-                            txcolor: Colors.sec
-                            hbcolor: Colors.sec
-                            htcolor: "#111"
-                            circleDia: 24
-                            borderWidth: 3
-                        }
-                        StationLabel {
-                            font: openPanel.font
-                            text: "Story2\n/path/to/story2"
-                            space: 2
-                            txcolor: Colors.sec
-                            hbcolor: Colors.sec
-                            htcolor: "#111"
-                            circleDia: 24
-                            borderWidth: 3
-                        }
+                        // StationLabel {
+                        //     font: openPanel.font
+                        //     text: name + "\n" + location
+                        //     space: 2
+                        //     txcolor: Colors.sec
+                        //     hbcolor: Colors.sec
+                        //     htcolor: "#111"
+                        //     circleDia: 24
+                        //     borderWidth: 3
+                        // }
                     }
                 }
 
