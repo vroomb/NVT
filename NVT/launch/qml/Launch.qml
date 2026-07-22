@@ -13,14 +13,19 @@ Control {
     ContextMenu.menu: MetroContextMenu {}
 
     property bool buttons_active_focus_on_tab: true
+    property real radius: 15
 
     signal launchRequested(location: string);
 
     padding: 30
     bottomPadding: padding + footer.height
+
     background: Rectangle {
         color: "#111"
+        radius: root.radius
+        anchors.fill: parent
     }
+
     contentItem: LaunchList {
         id: launchList
 
@@ -180,6 +185,11 @@ Control {
             }
         }
 
-        background: Rectangle { color: "#090909" }
+        background: Rectangle {
+            color: "#090909"
+            radius: root.radius
+            border.width: 5
+            border.color: "transparent"
+        }
     }
 }

@@ -19,6 +19,8 @@ Control {
 
     property point pin
 
+    signal focused();
+
     ContextMenu.menu: MetroContextMenu {
         id: contextMenu
         Action {
@@ -85,6 +87,7 @@ Control {
         acceptedButtons: Qt.LeftButton
         onClicked: event => {
             focus = true
+            root.focused()
         }
 
         onPressed: event => {

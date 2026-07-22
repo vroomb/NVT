@@ -89,6 +89,15 @@ void LaunchList::removeProject(QString location) {
     }
 }
 
+void LaunchList::createProject(QString name, QString location) {
+    removeProject(location);
+
+    auto h = new LaunchHandle{ name, location, projectListComponent() };
+    h->setParent(projectListItem());
+    h->m_last_updated = cr::steady_clock::now();
+    m_handles.insert(h);
+}
+
 void LaunchList::addProject(QString name, QString location, time_point tp) {
     removeProject(location);
 

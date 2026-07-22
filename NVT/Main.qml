@@ -8,7 +8,7 @@ import NVT.Launch
 ApplicationWindow {
     id: root
     visible: true
-    // visibility: Window.Maximized
+    visibility: Window.Maximized
 
     FontLoader {
         id: johnston_medium
@@ -32,42 +32,57 @@ ApplicationWindow {
     menuBar: MetroMenuBar {
         id: metroMenuBar
         height: 0
+        clip: true
+
+        onActiveFocusChanged: {
+            if (focus === true) {
+                metroMenuBar.height = 40;
+            }
+        }
+
         Behavior on height {
             NumberAnimation { duration: 200 }
+        }
+
+        Menu {
+            title: "File"
+            Action {
+                text: "Launch"
+                onTriggered: launchWindow.visible = true
+            }
         }
     }
 
     Item {
         id: keyEventManager
         focus: true
-        Keys.onPressed: (event) => {
-            if (event.key === Qt.Key_Alt) {
-                if (metroMenuBar.height === 0) {
-                    metroMenuBar.height = 20;
-                } else {
-                    metroMenuBar.height = 0;
-                }
-            }
-            else {
-                contentFrame.keysOnPressed(event);
-            }
-        }
-        Keys.onReleased: (event) => {
-            contentFrame.keysOnReleased(event);
+        // Keys.onPressed: (event) => {
+        //     if (event.key === Qt.Key_Alt) {
+        //         metroMenuBar.height = 30;
+        //     }
+        //     else if (event.key === Qt.Key_Escape) {
+        //         metroMenuBar.height = 0;
+        //     }
+        //     else {
+        //         contentFrame.keysOnPressed(event);
+        //     }
+        // }
+        // Keys.onReleased: (event) => {
+        //     contentFrame.keysOnReleased(event);
+        // }
+    }
+
+    Timeline {
+        id: contentFrame
+        anchors.fill: parent
+
+        onFocused: {
+            metroMenuBar.height = 0;
         }
     }
 
-    // Timeline {
-    //     id: contentFrame
-    //     anchors.fill: parent
-    // }
-
-    Launch {
-        id: contentFrame
-        anchors.fill: parent
-        onLaunchRequested: (location) => {
-            print(location)
-            root.close();
-        }
+    LaunchWindow {
+        id: launchWindow
+        visible: false
     }
 }

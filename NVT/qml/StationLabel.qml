@@ -6,7 +6,7 @@ import NVTModule
 Control {
     id: root
 
-    property string text: ""
+    property alias text: metroButton.text
     property color bgcolor: "transparent"
     property color txcolor: "black"
     property color hbcolor: "blue"
@@ -80,7 +80,6 @@ Control {
 
         MetroButton {
             id: metroButton
-            text: root.text
             bgcolor: root.bgcolor
             txcolor: root.txcolor
             hbcolor: root.hbcolor

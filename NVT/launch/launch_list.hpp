@@ -45,6 +45,7 @@ public:
 
     LaunchHandle* project(QString location);
 
+    Q_INVOKABLE void createProject(QString name, QString location);
     Q_INVOKABLE void addProject(QString name, QString location, time_point tp);
     Q_INVOKABLE void removeProject(QString location);
 

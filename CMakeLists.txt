@@ -47,6 +47,7 @@ qt_add_qml_module(appNVT
         "res/johnston-itc/johnston-itc-std-medium.otf"
     SOURCES
         "NVT/application.hpp"
+        QML_FILES NVT/qml/BetterButton.qml
 )
 
 add_subdirectory(NVT/timeline)

@@ -60,6 +60,11 @@ AbstractButton {
         print("entered pressed")
     }
 
+    onTextChanged: {
+        textBlack.text = text
+        textWhite.text = text
+    }
+
     Control {
         id: control
         anchors.verticalCenter: parent.verticalCenter
