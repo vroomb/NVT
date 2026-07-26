@@ -23,14 +23,30 @@ Control {
 
     ContextMenu.menu: MetroContextMenu {
         id: contextMenu
-        Action {
-            text: "Add an event"
-            onTriggered: {
-                pin.x = pin.x - timelineGraph.x
-                pin.y = pin.y - timelineGraph.y
-                timelineGraph.add_node(pin)
+
+        padding: 0
+
+        contentItem: ColumnLayout {
+            MetroButton {
+                text: "Add an event"
+                onClicked: {
+                    pin.x = pin.x - timelineGraph.x
+                    pin.y = pin.y - timelineGraph.y
+                    timelineGraph.add_node(pin)
+                }
+            }
+            MetroButton {
+                text: "Add a chain"
+                onClicked: {
+                    pin.x = pin.x - timelineGraph.x
+                    pin.y = pin.y - timelineGraph.y
+                    timelineGraph.add_chain(pin)
+                }
             }
         }
+
+        width: contextMenu.leftPadding + contentWidth + contextMenu.rightPadding;
+        onContentWidthChanged: width = contextMenu.leftPadding + contentWidth + contextMenu.rightPadding;
     }
 
     ContextMenu.onRequested: position => {
@@ -90,22 +106,26 @@ Control {
             root.focused()
         }
 
+        property var activeChain
+
         onPressed: event => {
             var point = Qt.point(event.x - timelineGraph.x, event.y - timelineGraph.y);
-            if (chain.hit(point) === true) {
-                chain.cursorEnabled = true
-                chain.cursor.x = point.x
-                chain.cursor.y = point.y
-                drag.target = chain.cursor
+            activeChain = timelineGraph.fetch_chain(point)
+            if (activeChain !== null) {
+                activeChain.cursorEnabled = true
+                activeChain.cursor.x = point.x
+                activeChain.cursor.y = point.y
+                drag.target = activeChain.cursor
             }
         }
 
         onReleased: event => {
             var point = Qt.point(event.x - timelineGraph.x, event.y - timelineGraph.y);
-            if (chain.cursorEnabled === true) {
-                chain.cursorEnabled = false;
+            if (activeChain !== null) {
+                activeChain.cursorEnabled = false;
                 drag.target = timelineGraph
-                chain.pin(timelineGraph.fetch_node(point));
+                activeChain.pin(timelineGraph.fetch_node(point));
+                activeChain = null;
             }
         }
 
@@ -124,9 +144,13 @@ Control {
                 NumberAnimation { duration: 16 }
             }
 
-            Chain {
-                id: chain
-                z: -1
+            Rectangle {
+                width: 4
+                height: width
+                radius: width/2
+                x: -radius
+                y: -radius
+                color: "red"
             }
         }
     }

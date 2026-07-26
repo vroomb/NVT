@@ -1,6 +1,7 @@
 #pragma once
 
 #include "launch.hpp"
+#include <project.hpp>
 
 namespace cr = std::chrono;
 using time_point = cr::time_point<cr::steady_clock>;
@@ -45,12 +46,12 @@ public:
 
     LaunchHandle* project(QString location);
 
-    Q_INVOKABLE void createProject(QString name, QString location);
-    Q_INVOKABLE void addProject(QString name, QString location, time_point tp);
-    Q_INVOKABLE void removeProject(QString location);
+    void addProject(nvt::launch_details &ld);
 
-    // overwrite previous contents with updated ones
-    Q_INVOKABLE void overwrite_launch_list_file();
+    Q_INVOKABLE void reset();
+
+    Q_INVOKABLE void createProject(QString name, QString location);
+    Q_INVOKABLE void removeProject(QString location);
 
     Q_INVOKABLE void find(QString text);
 
@@ -64,7 +65,7 @@ protected:
     void componentComplete() override;
 
 private:
-    QSet<LaunchHandle*> m_handles{};
+    std::set<LaunchHandle*> m_handles{};
 
     QString m_launchLocation{};
     QQuickItem* m_projectListItem{};

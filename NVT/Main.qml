@@ -83,6 +83,6 @@ ApplicationWindow {
 
     LaunchWindow {
         id: launchWindow
-        visible: false
+        visible: true
     }
 }

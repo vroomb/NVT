@@ -2,60 +2,70 @@ import QtQuick
 import QtQuick.Controls.Basic
 import NVTModule
 
+// remember to fix: padding is applied twice!
+// first to the root
+// second to the label
+
 AbstractButton {
     id: root
 
-    property color bgcolor: "transparent"
-    property color txcolor: "black"
+    property color color: Colors.pri
 
-    property color hbcolor: "blue"
-    property color htcolor: "white"
+    property alias bgcolor: bg.color
+    property alias txcolor: textBlack.color
+    property alias hbcolor: hb.color
+    property alias htcolor: textWhite.color
 
-    property int xinset: 5
-    property int yinset: 0
-
-    //padding: 0
-
-    implicitWidth: leftPadding + control.width + rightPadding
-    implicitHeight: topPadding + control.height + bottomPadding
+    property alias p: textBlack.padding
+    property alias tp: textBlack.topPadding
+    property alias lp: textBlack.leftPadding
+    property alias rp: textBlack.rightPadding
+    property alias bp: textBlack.bottomPadding
 
     property bool hover: true
     property bool click: true
     property bool highlight: false
 
-    function onEntered(): void {
-        enteredAnim.start();
-        _onEntered();
-    }
-    function onExited(): void {
-        exitedAnim.start();
-        _onExited();
-    }
-    function onClicked(): void {
-        hover = false;
-        enteredAnim.start();
-        hover = true;
-        _onClicked();
-    }
+    signal entered();
+    signal exited();
 
-    function _onEntered(): void {}
-    function _onExited(): void {}
+    function _onEntered(): void {
+        if (hover) {
+            highlight = true;
+            // print(text + " was entered");
+            enteredAnim.start();
+        }
+        entered();
+    }
+    function _onExited(): void {
+        if (hover) {
+            highlight = false;
+            // print(text + " was exited");
+            exitedAnim.start();
+        }
+        exited();
+    }
     function _onClicked(): void {
-        print(text + " was clicked")
+        if (click) {
+            print(text + " was clicked");
+            if (highlight) exitedAnim.start();
+            else           enteredAnim.start();
+        }
+        clicked();
     }
 
     activeFocusOnTab: false
     onActiveFocusChanged: {
         if (activeFocus === true) {
-            enteredAnim.start();
+            _onEntered();
         } else {
-            exitedAnim.start();
+            _onExited();
         }
     }
 
     Keys.onReturnPressed: {
         if (activeFocus === true) {
-            onClicked();
+            _onClicked();
         }
         print("entered pressed")
     }
@@ -65,138 +75,106 @@ AbstractButton {
         textWhite.text = text
     }
 
-    Control {
-        id: control
-        anchors.verticalCenter: parent.verticalCenter
-        x: parent.leftPadding
-        width: textBlack.contentWidth + 2*root.xinset
-        height: textBlack.contentHeight + 2*root.yinset
-        Rectangle {
-            color: root.bgcolor
-            anchors.fill: parent
-            Label {
-                x: root.xinset
-                y: root.yinset
-                id: textBlack
-                text: root.text
-                color: root.txcolor
-                font: root.font
-            }
+    onFontChanged: {
+        textBlack.font = root.font
+        textWhite.font = root.font
+    }
+
+    contentItem: Label {
+        id: textBlack
+        text: root.text
+        font: root.font
+        color: root.color
+
+        padding: 5
+
+        onPaddingChanged:       textWhite.padding       = padding
+        onTopPaddingChanged:    textWhite.topPadding    = topPadding
+        onLeftPaddingChanged:   textWhite.leftPadding   = leftPadding
+        onRightPaddingChanged:  textWhite.rightPadding  = rightPadding
+        onBottomPaddingChanged: textWhite.bottomPadding = bottomPadding
+
+        background: Rectangle {
+            id: bg
+            color: "transparent"
         }
 
-        Rectangle {
-            id: highlight
-            z: 1
-            width: 0
-            height: control.height
-            color: root.hbcolor
+        Item {
+            id: clipping
             clip: true
+            width: textWhite.width
+
+            x: - width - 1
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+
+            onXChanged: {
+                textWhite.x = -clipping.x
+            }
 
             Label {
-                x: root.xinset
-                y: root.yinset
                 id: textWhite
                 text: root.text
-                color: root.htcolor
-                height: control.height
-                width: control.width
                 font: root.font
-            }
+                color: Colors.bse
 
-            NumberAnimation {
-                id: enteredAnim
-                target: highlight
-                property: "width"
-                to: control.width
-                duration: 200
-                easing.type: Easing.InOutQuad
-                onFinished: {
-                    if ((activeFocus === false)
-                            && (root.highlight === false)
-                            && ((control.hovered === false) || (root.hover == false))) {
-                        exitedAnim.start();
-                    }
-                }
-            }
+                padding:       textBlack.padding
+                topPadding:    textBlack.topPadding
+                leftPadding:   textBlack.leftPadding
+                rightPadding:  textBlack.rightPadding
+                bottomPadding: textBlack.bottomPadding
 
-            SequentialAnimation {
-                id: exitedAnim
-                alwaysRunToEnd: true
-                ParallelAnimation {
-                    NumberAnimation {
-                        target: highlight
-                        property: "x"
-                        duration: 200
-                        to: control.width
-                        easing.type: Easing.InOutQuad
-                    }
-                    NumberAnimation {
-                        target: textWhite
-                        property: "x"
-                        duration: 200
-                        to: -control.width
-                        easing.type: Easing.InOutQuad
-                    }
-                    NumberAnimation {
-                        target: highlight
-                        property: "width"
-                        duration: 200
-                        to: 0
-                        easing.type: Easing.InOutQuad
-                    }
-                }
-                ParallelAnimation {
-                    NumberAnimation {
-                        target: highlight
-                        property: "x"
-                        duration: 0
-                        to: 0
-                        easing.type: Easing.InOutQuad
-                    }
-                    NumberAnimation {
-                        target: textWhite
-                        property: "x"
-                        duration: 0
-                        to: root.xinset
-                        easing.type: Easing.InOutQuad
-                    }
-                }
-                onFinished: {
-                    if (control.hovered && root.hover === true) {
-                        enteredAnim.start();
-                    }
+                x: -clipping.x
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+
+                background: Rectangle {
+                    id: hb
+                    color: root.color
                 }
             }
         }
+    }
 
-        MouseArea {
-            z: 10
-            id: mouseArea
-            anchors.fill: parent
-            hoverEnabled: true
-            acceptedButtons: Qt.LeftButton
-            onClicked: {
-                if (click == true) {
-                    if (root.hover == true) {
-                        exitedAnim.start();
-                    } else {
-                        enteredAnim.start();
-                    }
-                    root._onClicked();
-                }
-            }
-            onEntered: {
-                if (root.hover == true) {
-                    enteredAnim.start();
-                }
-                root._onEntered();
-            }
-            onExited: {
-                if (root.hover == true) {
-                    exitedAnim.start();
-                }
-                root._onExited();
-            }
+    background: MouseArea {
+        id: mouseArea
+        z: 100
+
+        hoverEnabled: true
+        acceptedButtons: Qt.LeftButton
+
+        onClicked: root._onClicked();
+        onEntered: root._onEntered();
+        onExited:  root._onExited();
+    }
+
+    NumberAnimation {
+        id: enteredAnim
+        target: clipping
+        property: "x"
+        to: 0
+        duration: 200
+        easing.type: Easing.InOutQuad
+        onFinished: if (highlight == false) exitedAnim.start();
+    }
+
+    SequentialAnimation {
+        id: exitedAnim
+        alwaysRunToEnd: true
+        NumberAnimation {
+            target: clipping
+            property: "x"
+            to: textWhite.width
+            duration: 200
+            easing.type: Easing.InOutQuad
         }
+        NumberAnimation {
+            target: clipping
+            property: "x"
+            to: - textWhite.width - 1
+            duration: 0
+            easing.type: Easing.InOutQuad
+        }
+        onFinished: if (highlight) enteredAnim.start();
     }
 }

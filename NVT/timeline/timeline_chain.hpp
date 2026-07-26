@@ -1,6 +1,6 @@
 #pragma once
 
-#include "library.hpp"
+#include "timeline.hpp"
 #include "timeline_pin.hpp"
 
 class TimelineChain : public QQuickItem {
@@ -73,6 +73,9 @@ signals:
     void hitWidthChanged();
     void cursorEnabledChanged();
 
+    void remove();
+    void erase();
+
 protected:
     void componentComplete() override;
 
@@ -81,13 +84,14 @@ private:
     qint32 m_strokeWidth = 16;
     qint32 m_hitWidth = 16;
     bool m_cursorEnabled = false;
+    QPointF m_initial_xy = { 0, 0 };
 
     QPolygonF m_path{};
     QPolygonF m_polygon{};
 
-    TimelinePin* m_start{};
-    TimelinePin* m_end{};
-    TimelinePin* m_cursor{};
+    TimelinePin* m_start  = nullptr;
+    TimelinePin* m_end    = nullptr;
+    TimelinePin* m_cursor = nullptr;
     QMap<QQuickItem*, TimelinePin*> pins{};
 };
 

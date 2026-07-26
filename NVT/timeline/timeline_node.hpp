@@ -1,6 +1,6 @@
 #pragma once
 
-#include "library.hpp"
+#include "timeline.hpp"
 
 class TimelineNode : public QQuickItem {
     Q_OBJECT
@@ -11,6 +11,9 @@ public:
 signals:
     void pressed();
     void released();
+
+    void remove();
+    void erase();
 
 private:
 };

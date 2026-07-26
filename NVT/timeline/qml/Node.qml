@@ -7,6 +7,8 @@ import NVTModule
 TimelineNode {
     id: root
 
+    z: 1
+
     property string text: ""
     property string desc: ""
     property color bgcolor: "transparent"
@@ -26,7 +28,6 @@ TimelineNode {
     property font font
 
     state: "passive"
-
     objectName: "Node"
 
     Control {
@@ -138,6 +139,13 @@ TimelineNode {
             radius: 10
             Behavior on opacity {
                 NumberAnimation { duration: 200 }
+            }
+        }
+
+        ContextMenu.menu: MetroContextMenu {
+            Action {
+                text: "Remove this Node from graph"
+                onTriggered: root.remove();
             }
         }
     }

@@ -7,10 +7,10 @@ Control {
     id: root
 
     property alias text: metroButton.text
-    property color bgcolor: "transparent"
-    property color txcolor: "black"
-    property color hbcolor: "blue"
-    property color htcolor: "white"
+    property alias bgcolor: metroButton.bgcolor
+    property alias txcolor: metroButton.txcolor
+    property alias hbcolor: metroButton.hbcolor
+    property alias htcolor: metroButton.htcolor
     property int xinset: 5
     property int yinset: 0
     property bool buttonActiveFocusOnTab: false
@@ -37,22 +37,21 @@ Control {
 
     MouseArea {
         id: mouseArea
+        z: 100
         anchors.fill: parent
         hoverEnabled: true
         acceptedButtons: Qt.LeftButton
         onClicked: {
             root.clicked();
-            metroButton.onClicked();
+            metroButton._onClicked();
         }
         onEntered: {
-            root.entered()
-            metroButton.highlight = true;
-            metroButton.onEntered();
+            root.entered();
+            metroButton._onEntered();
         }
         onExited: {
-            root.exited()
-            metroButton.highlight = false;
-            metroButton.onExited();
+            root.exited();
+            metroButton._onExited();
         }
         onDoubleClicked: {
             root.doubleClicked();
@@ -80,14 +79,7 @@ Control {
 
         MetroButton {
             id: metroButton
-            bgcolor: root.bgcolor
-            txcolor: root.txcolor
-            hbcolor: root.hbcolor
-            htcolor: root.htcolor
-            xinset: root.xinset
-            yinset: root.yinset
             activeFocusOnTab: root.buttonActiveFocusOnTab
-            hover: false
         }
 
         Item {

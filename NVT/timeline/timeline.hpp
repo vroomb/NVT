@@ -1,26 +1,25 @@
 #pragma once
 
-#include "library.hpp"
-#include "timeline_node.hpp"
-#include "timeline_chain.hpp"
+#include <QQuickItem>
+#include <QGuiApplication>
+#include <QtLogging>
+#include <QtQml>
+#include <QMap>
 
-class TimelineGraph : public QQuickItem {
-    Q_OBJECT
-    QML_ELEMENT
-public:
-    explicit TimelineGraph(QQuickItem* parent = NULL) : QQuickItem(parent) {}
+//#include <project.hpp>
 
-    Q_INVOKABLE void add_node(QPointF where);
-    Q_INVOKABLE QQuickItem* fetch_node(QPointF where);
-    Q_INVOKABLE void clear_nodes();
+#include <string>
+#include <cmath>
 
-signals:
-    void polygonChanged();
+#define prj_dir "H:/projects/cpp/NVT/"
+#define src_dir "H:/projects/cpp/NVT/NVT/timeline/"
+#define data_dir prj_dir"temp_storage/"
+#define timeline_graph_file data_dir"graph.txt"
 
-protected:
-    void componentComplete() override;
+#define max(x, y) (((x) > (y)) ? (x) : (y))
+#define sgn(x) ((x > 0) ? 1 : ((x < 0) ? -1 : 0))
 
-private:
-    QPolygonF m_polygon{};
-    QSet<TimelineNode*> m_nodes{};
-};
+namespace nvt {
+	void log(std::string str);
+}
+

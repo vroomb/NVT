@@ -7,9 +7,16 @@ void TimelineChain::componentComplete() {
     m_end = create_pin();
     m_cursor = create_pin();
 
-    m_start->setY(600);
+    m_start->setX(x());
+    m_start->setY(y());
+
     m_cursor->setAccept(false);
-    m_end->setX(1000);
+
+    m_end->setX(x() + 1000);
+    m_end->setY(y());
+
+    setX(0);
+    setY(0);
 
     switch (m_chainMode) {
     case horizontal:
@@ -22,6 +29,22 @@ void TimelineChain::componentComplete() {
     }
 
     connect(this, &TimelineChain::cursorEnabledChanged, this, &TimelineChain::update_polygon);
+
+    connect(this, &TimelineChain::xChanged,
+        [this]() {
+            m_start->setX(m_start->x() + x());
+            m_end->setX(m_end->x() + x());
+            for (auto i : pins.keys()) i->setX(i->x() + x());
+            setX(0);
+        });
+
+    connect(this, &TimelineChain::yChanged, 
+        [this]() {
+            m_start->setY(m_start->y() + y());
+            m_end->setY(m_end->y() + y());
+            for (auto i : pins.keys()) i->setY(i->y() + y());
+            setY(0);
+        });
 
     update_polygon();
 }
@@ -124,6 +147,7 @@ TimelinePin* TimelineChain::create_pin() {
         qWarning() << "Failed to create " << qml_file << ": " << comp.errors();
         return nullptr;
     }
+
     item->setParentItem(this);
 
     connect(item, &QQuickItem::xChanged, this, &TimelineChain::update_polygon);

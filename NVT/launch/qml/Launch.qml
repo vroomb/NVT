@@ -10,7 +10,7 @@ Control {
     font.family: "Johnston ITC Std"
     font.pixelSize: 20
 
-    ContextMenu.menu: MetroContextMenu {}
+    // ContextMenu.menu: MetroContextMenu {}
 
     property bool buttons_active_focus_on_tab: true
     property real radius: 15
@@ -41,8 +41,6 @@ Control {
 
             text: name + "\n" + location
             space: 2
-            txcolor: Colors.sec
-            hbcolor: Colors.sec
             htcolor: "#111"
             padding: 7
             leftPadding: 20
@@ -63,97 +61,153 @@ Control {
             }
         }
 
-        GridLayout {
-            columns: 2
+        SwipeView {
+            id: swipe
+            clip: true
+            interactive: false
             anchors.fill: parent
 
-            Control {
-                padding: 5
-                Layout.fillWidth: true
-                contentItem: TextField {
-                    id: textField
-                    background: Item {}
+            GridLayout {
+                columns: 2
 
-                    onTextChanged: {
-                        launchList.find(this.text)
+                Control {
+                    padding: 5
+                    Layout.fillWidth: true
+                    contentItem: TextField {
+                        id: textField
+                        background: Item {}
+
+                        onTextChanged: {
+                            launchList.find(this.text)
+                        }
+                    }
+                    background: Rectangle {
+                        color: "transparent"
+
+                        radius: 10
+                        border.color: "#1f1f1f"
+                        border.width: 2
                     }
                 }
-                background: Rectangle {
-                    color: "transparent"
 
-                    radius: 10
-                    border.color: "#1f1f1f"
-                    border.width: 2
+                Control {
+                    id: createPanel
+                    padding: 5
+                    contentItem: ColumnLayout {
+                        MetroButton {
+                            font: createPanel.font
+                            text: "Create a new story"
+                            color: Colors.ter
+                            htcolor: "#111"
+
+                            rightPadding: 40
+
+                            onClicked: {
+                                swipe.currentIndex = 1
+                            }
+
+                            Image {
+                                source: "../res/svg/yellow_arrow.svg"
+                                height: parent.font.pixelSize
+                                width: parent.font.pixelSize
+                                rotation: -45
+
+                                anchors.right: parent.right
+                                anchors.rightMargin: 10
+                                anchors.verticalCenter: parent.verticalCenter
+                            }
+                        }
+                        MetroButton {
+                            font: createPanel.font
+                            text: "Add an existing story"
+                            color: Colors.ter
+                            htcolor: "#111"
+
+                            onClicked: {
+                                folderDialog.open()
+                            }
+
+                            FolderDialog { id: folderDialog }
+                        }
+                    }
+                    Layout.rowSpan: 2
+                    Layout.minimumWidth: 200
+                }
+
+                Control {
+                    id: openPanel
+
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true
+
+                    padding: 10
+
+                    contentItem: ScrollView {
+                        id: scrollView
+                        ColumnLayout {
+                            id: projectList
+                            spacing: 0
+
+                            function launchRequested(location: string) {
+                                root.launchRequested(location)
+                            }
+
+                            Item {
+                                Layout.preferredWidth: scrollView.width
+                            }
+                        }
+                    }
+
+                    background: Rectangle {
+                        color: "transparent"
+
+                        radius: 10
+                        border.color: "#1f1f1f"
+                        border.width: 2
+                    }
                 }
             }
 
-            Control {
-                id: createPanel
-                padding: 5
-                contentItem: ColumnLayout {
-                    StationLabel {
-                        font: createPanel.font
-                        text: "Create a new story"
-                        space: 2
-                        txcolor: Colors.ter
-                        hbcolor: Colors.ter
-                        htcolor: "#111"
-                        circleDia: 24
-                        borderWidth: 3
+            GridLayout {
+                columns: 2
+                MetroButton {
+                    text: "Back to opening a story"
+                    leftPadding: 40
+                    color: Colors.sec
+
+                    Layout.columnSpan: 2
+
+                    onClicked: {
+                        swipe.currentIndex = 0
                     }
-                    StationLabel {
-                        font: createPanel.font
-                        text: "Add an existing story"
-                        space: 2
-                        txcolor: Colors.ter
-                        hbcolor: Colors.ter
-                        htcolor: "#111"
-                        circleDia: 24
-                        borderWidth: 3
 
-                        onClicked: {
-                            folderDialog.open()
-                        }
+                    Image {
+                        source: "../res/svg/blue_arrow.svg"
+                        height: parent.font.pixelSize
+                        width: parent.font.pixelSize
+                        rotation: 135
 
-                        FolderDialog {
-                            id: folderDialog
-                        }
-                    }
-                }
-                Layout.rowSpan: 2
-                Layout.minimumWidth: 200
-            }
-
-            Control {
-                id: openPanel
-
-                Layout.fillHeight: true
-                Layout.fillWidth: true
-
-                padding: 10
-
-                contentItem: ScrollView {
-                    id: scrollView
-                    ColumnLayout {
-                        id: projectList
-                        spacing: 0
-
-                        function launchRequested(location: string) {
-                            root.launchRequested(location)
-                        }
-
-                        Item {
-                            Layout.preferredWidth: scrollView.width
-                        }
+                        anchors.left: parent.left
+                        anchors.leftMargin: 10
+                        anchors.verticalCenter: parent.verticalCenter
                     }
                 }
 
-                background: Rectangle {
-                    color: "transparent"
+                Label {
+                    text: "Create a story"
+                    font.pixelSize: 30
+                    color: Colors.ter
+                    Layout.columnSpan: 2
 
-                    radius: 10
-                    border.color: "#1f1f1f"
-                    border.width: 2
+                    Image {
+                        source: "../res/svg/yellow_arrow.svg"
+                        height: parent.font.pixelSize
+                        width: parent.font.pixelSize
+                        rotation: 0
+
+                        anchors.left: parent.right
+                        anchors.verticalCenter: parent.verticalCenter
+                    }
                 }
             }
         }

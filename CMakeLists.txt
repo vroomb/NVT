@@ -50,8 +50,10 @@ qt_add_qml_module(appNVT
         QML_FILES NVT/qml/BetterButton.qml
 )
 
-add_subdirectory(NVT/timeline)
 add_subdirectory(NVT/project)
+
+# qml module libs
+add_subdirectory(NVT/timeline)
 add_subdirectory(NVT/launch)
 
 set_property(TARGET appNVT PROPERTY CXX_STANDARD 23)

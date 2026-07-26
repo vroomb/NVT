@@ -1,9 +1,8 @@
 include("C:/Program Files/Microsoft Visual Studio/18/Community/VC/vcpkg/scripts/buildsystems/vcpkg.cmake")
 
-qt_add_library(launchlib
-)
+find_package(SQLiteCpp CONFIG REQUIRED)
 
-find_package(nlohmann_json CONFIG REQUIRED)
+qt_add_library(launchlib STATIC)
 
 set_target_properties(launchlib
     PROPERTIES
@@ -14,8 +13,9 @@ set_target_properties(launchlib
 target_include_directories(launchlib PUBLIC .)
 target_link_libraries(launchlib
     PRIVATE Qt6::Quick
-    PUBLIC nlohmann_json::nlohmann_json
+    PUBLIC projectlib
 )
+target_include_directories(launchlib PUBLIC ../project)
 
 qt_add_qml_module(launchlib
     URI NVT.Launch

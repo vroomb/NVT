@@ -2,6 +2,12 @@
 #include <launch_handle.hpp>
 #include "application.hpp"
 
+nvt::global* m_global_instance = nullptr;
+
+nvt::global* global_instance() {
+    return m_global_instance;
+};
+
 void nvt::log(std::string str) {
     std::ofstream o(data_dir"log.txt", std::ios::app);
     qDebug() << str;
@@ -22,15 +28,7 @@ int main(int argc, char *argv[]) {
     QGuiApplication::setApplicationName("NVT");
     QGuiApplication::setWindowIcon(QIcon(src_dir"res/svg/lavender_arrow.svg"));
 
-    // QQmlApplicationEngine engine2;
-    // engine2.loadFromModule("NVT.Launch", "LaunchWindow");
-
-    // if (engine2.rootObjects().isEmpty() == true) {
-    //     nvt::log("engine2 was empty");
-    //     return -1;
-    // }
-
-    // r = QGuiApplication::exec();
+    m_global_instance = new nvt::global(data_dir);
 
     QQmlApplicationEngine engine;
     engine.loadFromModule("NVTModule", "Main");
@@ -42,5 +40,6 @@ int main(int argc, char *argv[]) {
 
     r = QGuiApplication::exec();
 
+    delete m_global_instance;
     return r;
 }
