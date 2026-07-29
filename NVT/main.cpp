@@ -1,12 +1,5 @@
 #include <project.hpp>
-#include <launch_handle.hpp>
 #include "application.hpp"
-
-nvt::global* m_global_instance = nullptr;
-
-nvt::global* global_instance() {
-    return m_global_instance;
-};
 
 void nvt::log(std::string str) {
     std::ofstream o(data_dir"log.txt", std::ios::app);
@@ -21,25 +14,9 @@ void nvt::log(std::string str) {
 int main(int argc, char *argv[]) {
     nvt::log("New run");
 
-    int r = 0;
+    nvt::application app(argc, argv);
+    if (app.has_errors()) nvt::log(app.error_message());
 
-    QGuiApplication app(argc, argv);
-    QGuiApplication::setOrganizationName("vroomb");
-    QGuiApplication::setApplicationName("NVT");
-    QGuiApplication::setWindowIcon(QIcon(src_dir"res/svg/lavender_arrow.svg"));
-
-    m_global_instance = new nvt::global(data_dir);
-
-    QQmlApplicationEngine engine;
-    engine.loadFromModule("NVTModule", "Main");
-
-    if (engine.rootObjects().isEmpty() == true) {
-        nvt::log("engine was empty");
-        return -1;
-    }
-
-    r = QGuiApplication::exec();
-
-    delete m_global_instance;
+    int r = app.exec();
     return r;
 }

@@ -2,6 +2,7 @@
 
 #include "launch.hpp"
 #include <project.hpp>
+#include <QUrl>
 
 namespace cr = std::chrono;
 using time_point = cr::time_point<cr::steady_clock>;

@@ -2,7 +2,7 @@ include("C:/Program Files/Microsoft Visual Studio/18/Community/VC/vcpkg/scripts/
 
 find_package(SQLiteCpp CONFIG REQUIRED)
 
-qt_add_library(launchlib STATIC)
+qt_add_library(launchlib SHARED)
 
 set_target_properties(launchlib
     PROPERTIES

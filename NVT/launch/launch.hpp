@@ -10,8 +10,10 @@
 class LaunchHandle;
 class LaunchList;
 
-namespace nvt {
-	global* global_instance();
+#define prj_dir "H:/projects/cpp/NVT/"
+#define src_dir "H:/projects/cpp/NVT/NVT/timeline/"
+#define data_dir prj_dir"temp_storage/"
 
+namespace nvt {
 	void log(std::string);
 }

@@ -4,28 +4,37 @@
 #include <QQuickItem>
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
-#include <QAbstractListModel>
 #include <QtLogging>
 #include <QtQml>
-#include <QMultiMap>
 
 #include <filesystem>
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <cmath>
-#include <format>
-#include <algorithm>
 
 #define src_dir "H:/projects/cpp/NVT/"
 #define data_dir src_dir"temp_storage/"
 #define timeline_graph_file data_dir"graph.txt"
 
-#define max(x, y) (((x) > (y)) ? (x) : (y))
-#define sgn(x) ((x > 0) ? 1 : ((x < 0) ? -1 : 0))
-
 namespace nvt {
-	void log(std::string str);
+    void log(std::string str);
 
-	class application;
+    class application;
 }
+
+class nvt::application : public QGuiApplication {
+public:
+    application(int& argc, char** argv);
+    ~application();
+
+    bool has_errors();
+    std::string error_message();
+
+private:
+    void add_error(std::string str);
+
+    QQmlApplicationEngine main_engine{};
+
+    global* g = nullptr;
+    std::optional<std::string> err = std::nullopt;
+};

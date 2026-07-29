@@ -124,13 +124,13 @@ struct nvt::launch_details {
 
 class nvt::global {
 public:
-    static int open(fs::path location);
-    static int close();
-    static global* instance();
+    __declspec(dllexport) static int open(fs::path location);
+    __declspec(dllexport) static int close();
+    __declspec(dllexport) static global* instance();
 
-    std::list<launch_details> launches();
-    void add_launch(launch_details ld);
-    void rem_launch(std::string location);
+    __declspec(dllexport) std::list<launch_details> launches();
+    __declspec(dllexport) void add_launch(launch_details ld);
+    __declspec(dllexport) void rem_launch(std::string location);
 
 private:
     global(fs::path location);
@@ -138,7 +138,14 @@ private:
 
     static global* m_instance;
     fs::path m_location;
-    std::list<launch_details> m_launches{};
+
+    const struct less_launch_details {
+        bool operator()(const launch_details& lhs, const launch_details& rhs) const {
+            return lhs.last_updated > rhs.last_updated;
+        }
+    };
+
+    std::set<launch_details, less_launch_details> m_launches{};
 
     nlohmann::json config_json;
 };

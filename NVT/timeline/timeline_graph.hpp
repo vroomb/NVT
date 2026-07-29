@@ -1,5 +1,7 @@
 #pragma once
 
+#include <fstream>
+#include <iostream>
 #include "timeline.hpp"
 #include "timeline_node.hpp"
 #include "timeline_chain.hpp"

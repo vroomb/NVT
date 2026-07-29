@@ -1,5 +1,15 @@
 #include "timeline_graph.hpp"
 
+void nvt::log(std::string str) {
+    std::ofstream o(data_dir"log.txt", std::ios::app);
+    qDebug() << str;
+    if (o.is_open() == false) {
+        std::cout << "bruuuh";
+        return;
+    }
+    o << str << "\n";
+}
+
 void TimelineGraph::componentComplete() {
     QQuickItem::componentComplete();
 }

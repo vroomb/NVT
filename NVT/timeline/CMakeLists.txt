@@ -1,4 +1,4 @@
-qt_add_library(timelinelib STATIC)
+qt_add_library(timelinelib SHARED)
 
 set_target_properties(timelinelib PROPERTIES CXX_STANDARD 23)
 set_target_properties(timelinelib PROPERTIES AUTOMOC ON)

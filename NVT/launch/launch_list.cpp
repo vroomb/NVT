@@ -1,6 +1,16 @@
 #include "launch_list.hpp"
 #include "launch_handle.hpp"
 
+void nvt::log(std::string str) {
+    std::ofstream o(data_dir"log.txt", std::ios::app);
+    qDebug() << str;
+    if (o.is_open() == false) {
+        std::cout << "bruuuh";
+        return;
+    }
+    o << str << "\n";
+}
+
 LaunchList::LaunchList(QQuickItem* parent) : QQuickItem(parent) {}
 
 LaunchList::~LaunchList() {
@@ -40,14 +50,15 @@ LaunchHandle* LaunchList::project(QString location) {
 }
 
 void LaunchList::removeProject(QString location) {
-    auto g = nvt::global_instance();
+    auto g = nvt::global::instance();
     g->rem_launch(location.toStdString());
 
     reset();
 }
 
 void LaunchList::createProject(QString name, QString location) {
-    auto g = nvt::global_instance();
+    auto g = nvt::global::instance();
+    location = location + "/" + name;
     g->rem_launch(location.toStdString());
 
     nvt::launch_details ld{
@@ -71,7 +82,7 @@ void LaunchList::reset() {
     for (auto i : m_handles) delete i;
     m_handles.clear();
 
-    auto g = nvt::global_instance();
+    auto g = nvt::global::instance();
     for (auto &i : g->launches()) addProject(i);
 }
 

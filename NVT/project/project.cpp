@@ -32,13 +32,14 @@ nvt::global::global(fs::path location) :
                 if ((i["name"].is_string() == true) &&
                     (i["location"].is_string() == true)) {
                     if (i["last updated"].is_number_unsigned() == true)
-                        m_launches.push_back({
+                        m_launches.insert(nvt::launch_details{
                             i["name"],
                             i["location"],
                             i["last updated"]
                         });
                     else
-                        m_launches.push_back({
+                        m_launches.insert(
+                            nvt::launch_details{
                             i["name"],
                             i["location"],
                             0,
@@ -49,12 +50,6 @@ nvt::global::global(fs::path location) :
             // for (auto i = m.end() - 1; i != m.begin() - 1; i--) {
             //     addProject(std::get<0>(i.value()), std::get<1>(i.value()), i.key());
             // }
-
-            std::stable_sort(m_launches.begin(), m_launches.end(),
-                [](launch_details lhs, launch_details rhs) {
-                    return lhs.last_updated > rhs.last_updated;
-                }
-            );
         }
     }
 }
@@ -64,7 +59,11 @@ nvt::global* nvt::global::instance() {
 }
 
 std::list<nvt::launch_details> nvt::global::launches() {
-    return m_launches;
+    std::list<nvt::launch_details> l{};
+
+    for (auto i : m_launches) l.push_back(i);
+
+    return l;
 }
 
 void nvt::global::add_launch(launch_details ld) {
@@ -73,6 +72,8 @@ void nvt::global::add_launch(launch_details ld) {
         { "location",     ld.location     },
         { "last updated", ld.last_updated }
     };
+
+    m_launches.insert(ld);
 
     std::ofstream(m_location / "config.json",
         std::ios::out | std::ios::trunc) << config_json.dump(2);

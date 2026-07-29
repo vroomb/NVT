@@ -21,5 +21,5 @@ namespace nvt {
     class global;
     class project;
 
-    global* global_instance();
+    void log(std::string);
 }
