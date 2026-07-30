@@ -34,4 +34,6 @@ qt_add_qml_module(launchlib
         launch_handle.cpp
         launch_list.hpp
         launch_list.cpp
+        launch_window.hpp
+        launch_window.cpp
 )

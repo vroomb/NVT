@@ -3,14 +3,14 @@ import QtQuick.Controls.Basic
 import NVTModule
 import NVT.Launch
 
-ApplicationWindow {
+NVTLaunchWindow {
     id: root
     visible: true
     flags: Qt.FramelessWindowHint
     color: "transparent"
 
-    width: 960
-    height: 540
+    width: 1280
+    height: 720
 
     FontLoader {
         id: johnston_medium
