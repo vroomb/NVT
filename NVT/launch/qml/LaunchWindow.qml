@@ -3,7 +3,7 @@ import QtQuick.Controls.Basic
 import NVTModule
 import NVT.Launch
 
-NVTLaunchWindow {
+Window {
     id: root
     visible: true
     flags: Qt.FramelessWindowHint

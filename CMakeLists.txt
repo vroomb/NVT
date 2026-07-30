@@ -50,11 +50,11 @@ qt_add_qml_module(appNVT
         "res/johnston-itc/johnston-itc-std-bold.otf"
         "res/johnston-itc/johnston-itc-std-medium.otf"
     SOURCES
-        "NVT/nvt.hpp"
-        "NVT/main.cpp"
-        "NVT/application.hpp"
-        "NVT/application.cpp"
-        "NVT/main_window.hpp"
+        # "NVT/nvt.hpp"
+        # "NVT/main.cpp"
+        # "NVT/application.hpp"
+        # "NVT/application.cpp"
+        # "NVT/main_window.hpp"
         "NVT/main_window.cpp"
 )
 

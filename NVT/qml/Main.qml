@@ -13,11 +13,11 @@ Window {
 
     FontLoader {
         id: johnston_medium
-        source: "../res/johnston-itc/johnston-itc-std-medium.otf"
+        source: "../../res/johnston-itc/johnston-itc-std-medium.otf"
     }
     FontLoader {
         id: johnston_bold
-        source: "../res/johnston-itc/johnston-itc-std-bold.otf"
+        source: "../../res/johnston-itc/johnston-itc-std-bold.otf"
     }
 
     property font font

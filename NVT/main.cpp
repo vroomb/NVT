@@ -15,7 +15,10 @@ int main(int argc, char *argv[]) {
     nvt::log("New run");
 
     nvt::application app(argc, argv);
-    if (app.has_errors()) nvt::log(app.error_message());
+    if (app.has_errors()) {
+        nvt::log(app.error_message());
+        return -1;
+    }
 
     int r = app.exec();
     return r;

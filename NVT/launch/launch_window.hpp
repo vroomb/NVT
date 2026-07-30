@@ -2,9 +2,9 @@
 
 #include "launch.hpp"
 
-class NVTLaunchWindow : public QQuickWindow {
+class NVTLaunchWindow : public QQuickItem {
 	Q_OBJECT
 	QML_ELEMENT
 public:
-	explicit NVTLaunchWindow(QWindow* parent = nullptr) : QQuickWindow(parent) {}
+	explicit NVTLaunchWindow(QQuickItem* parent = nullptr) : QQuickItem(parent) {}
 };

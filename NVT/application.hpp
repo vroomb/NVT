@@ -1,6 +1,7 @@
 #pragma once
 
 #include "nvt.hpp"
+#include "main_window.hpp"
 
 class nvt::application : public QGuiApplication {
 public:

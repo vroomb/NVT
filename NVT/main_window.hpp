@@ -1,10 +1,11 @@
 #pragma once
 
 #include <QQuickWindow>
+#include <QQuickItem>
 
-class NVTMainWindow : public QQuickWindow {
+class MainWindow : public QQuickItem {
 	Q_OBJECT
 	QML_ELEMENT
 public:
-	explicit NVTMainWindow(QWindow* parent = nullptr) : QQuickWindow(parent) {}
+	explicit MainWindow(QQuickItem* parent);
 };
