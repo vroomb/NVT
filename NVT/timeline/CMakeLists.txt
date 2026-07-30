@@ -1,7 +1,9 @@
 qt_add_library(timelinelib SHARED)
 
-set_target_properties(timelinelib PROPERTIES CXX_STANDARD 23)
-set_target_properties(timelinelib PROPERTIES AUTOMOC ON)
+set_target_properties(timelinelib PROPERTIES
+    AUTOMOC ON
+    CXX_STANDARD 23
+)
 target_link_libraries(timelinelib PRIVATE Qt6::Quick)
 
 qt_add_qml_module(timelinelib
