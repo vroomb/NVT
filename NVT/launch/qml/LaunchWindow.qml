@@ -3,10 +3,10 @@ import QtQuick.Controls.Basic
 import NVTModule
 import NVT.Launch
 
-Window {
+NVTLaunchWindow {
     id: root
+    // flags: Qt.FramelessWindowHint
     visible: true
-    flags: Qt.FramelessWindowHint
     color: "transparent"
 
     width: 1280
@@ -25,50 +25,15 @@ Window {
         id: launch
         anchors.fill: parent
 
-        BetterButton {
-            id: min
-
-            font.family: "FiraMono Nerd Font"
-
-            anchors.top: parent.top
-            anchors.topMargin: 5
-            anchors.right: close.left
-            width: 50
-            height: 30
-
-            bgcolor: "#222"
-            topRightRadius: 0
-
-            text: "—"
-            onClicked: root.visibility = Window.Minimized
-        }
-
-        BetterButton {
-            id: close
-
-            font.family: "FiraMono Nerd Font"
-
-            anchors.top: parent.top
-            anchors.topMargin: 5
-            anchors.right: parent.right
-            anchors.rightMargin: 5
-            width: 50
-            height: 30
-
-            bgcolor: "red"
-            topRightRadius: 10
-
-            text: "⛌"
-            onClicked: root.visible = false
-        }
-
         Rectangle {
             color: "transparent"
-            radius: 15
-            border.width: 5
+            radius: launch.radius
+            border.width: 0
             border.color: "#222"
             anchors.fill: parent
         }
+
+        onLaunchRequested: location => root.launchRequested(location);
     }
 
     DragHandler {

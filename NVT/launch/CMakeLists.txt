@@ -10,12 +10,15 @@ set_target_properties(launchlib
         CXX_STANDARD 23
 )
 
+target_compile_definitions(launchlib PRIVATE LAUNCHLIB)
+
+target_include_directories(launchlib PUBLIC ../project)
 target_include_directories(launchlib PUBLIC .)
+
 target_link_libraries(launchlib
     PRIVATE Qt6::Quick
     PUBLIC projectlib
 )
-target_include_directories(launchlib PUBLIC ../project)
 
 qt_add_qml_module(launchlib
     URI NVT.Launch

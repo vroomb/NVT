@@ -4,8 +4,10 @@ namespace cr = std::chrono;
 using time_point = cr::time_point<cr::steady_clock>;
 using seconds = cr::seconds;
 
+#ifdef    PROJECTLIB
 nvt::global* nvt::global::m_instance = nullptr;
-nvt::project* nvt::project::m_instance = nullptr;
+nvt::story* nvt::story::m_instance = nullptr;
+#endif // PROJECTLIB
 
 int nvt::global::open(fs::path location) {
     if (m_instance != nullptr) {
@@ -38,18 +40,13 @@ nvt::global::global(fs::path location) :
                             i["last updated"]
                         });
                     else
-                        m_launches.insert(
-                            nvt::launch_details{
+                        m_launches.insert(nvt::launch_details{
                             i["name"],
                             i["location"],
-                            0,
+                            0
                         });
                 }
             }
-
-            // for (auto i = m.end() - 1; i != m.begin() - 1; i--) {
-            //     addProject(std::get<0>(i.value()), std::get<1>(i.value()), i.key());
-            // }
         }
     }
 }
@@ -58,12 +55,8 @@ nvt::global* nvt::global::instance() {
     return m_instance;
 }
 
-std::list<nvt::launch_details> nvt::global::launches() {
-    std::list<nvt::launch_details> l{};
-
-    for (auto i : m_launches) l.push_back(i);
-
-    return l;
+std::set<nvt::launch_details, nvt::less_launch_details>* nvt::global::launches() {
+    return &m_launches;
 }
 
 void nvt::global::add_launch(launch_details ld) {
@@ -74,6 +67,12 @@ void nvt::global::add_launch(launch_details ld) {
     };
 
     m_launches.insert(ld);
+
+    if (fs::directory_entry(ld.location).exists() == false) {
+        std::error_code ec{};
+        if (fs::create_directory(ld.location, ec) == false)
+            std::cout << "story directory not created: " << ec << "\n";
+    }
 
     std::ofstream(m_location / "config.json",
         std::ios::out | std::ios::trunc) << config_json.dump(2);
@@ -98,24 +97,24 @@ int nvt::global::close() {
 
 nvt::global::~global() {}
 
-int nvt::project::open(fs::path location) {
+int nvt::story::open(fs::path location) {
     if (m_instance != nullptr) {
-        std::cout << "don't instantiate project twice.\n";
+        std::cout << "don't instantiate story twice.\n";
         return -1;
     }
 
-    m_instance = new project(location);
+    m_instance = new story(location);
     return 0;
 }
 
-nvt::project::project(fs::path location) :
+nvt::story::story(fs::path location) :
     m_location{ location },
     m_config_dir{ location / ".nvt" }
 {
     if (fs::directory_entry(m_config_dir).exists() == false) {
         std::error_code ec{};
         if (fs::create_directory(m_config_dir, ec) == false)
-            std::cout << "project directory not created: " << ec << "\n";
+            std::cout << "story directory not created: " << ec << "\n";
     }
 
     db = std::make_unique<SQLite::Database>((m_config_dir / "db.db").string(),
@@ -125,15 +124,15 @@ nvt::project::project(fs::path location) :
     m_name = location.filename().string();
 }
 
-nvt::project* nvt::project::instance() {
+nvt::story* nvt::story::instance() {
     return m_instance;
 }
 
-std::string nvt::project::name() {
+std::string nvt::story::name() {
     return m_name;
 }
 
-int nvt::project::close() {
+int nvt::story::close() {
     if (m_instance == nullptr) {
         return -1;
     } else {
@@ -142,4 +141,4 @@ int nvt::project::close() {
     }
 }
 
-nvt::project::~project() {}
+nvt::story::~story() {}

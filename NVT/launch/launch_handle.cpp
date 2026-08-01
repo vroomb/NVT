@@ -1,6 +1,6 @@
 #include "launch_handle.hpp"
 
-LaunchHandle::LaunchHandle(nvt::launch_details& ld, QQmlComponent* component) :
+LaunchHandle::LaunchHandle(const nvt::launch_details ld, QQmlComponent* component) :
     m_name    { QString::fromStdString(ld.name)              },
     m_location{ QString::fromStdString(ld.location.string()) }
 {

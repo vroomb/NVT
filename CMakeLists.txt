@@ -16,53 +16,13 @@ if (ANDROID OR IOS)
     return()
 endif()
 
-qt_add_executable(appNVT
-    NVT/nvt.hpp
-    NVT/main.cpp
-    NVT/application.hpp
-    NVT/application.cpp
-)
-
-set_source_files_properties(NVT/qml/Colors.qml
-    PROPERTIES
-        QT_QML_SINGLETON_TYPE TRUE
-)
-
-set_target_properties(appNVT PROPERTIES
-    AUTOMOC ON
-    CXX_STANDARD 23
-)
-
-qt_add_qml_module(appNVT
-    URI NVTModule
-    QML_FILES
-        "NVT/qml/Main.qml"
-        "NVT/qml/LoadPage.ui.qml"
-        "NVT/qml/MetroButton.qml"
-        "NVT/qml/MetroContextMenu.qml"
-        "NVT/qml/MetroMenuBar.qml"
-        "NVT/qml/StationLabel.qml"
-        "NVT/qml/Station.qml"
-        "NVT/qml/Colors.qml"
-        "NVT/qml/InternalWindow.qml"
-        "NVT/qml/BetterButton.qml"
-    RESOURCES
-        "res/svg/blue_arrow.svg"
-        "res/svg/lavender_arrow.svg"
-        "res/svg/yellow_arrow.svg"
-        "res/johnston-itc/johnston-itc-std-bold.otf"
-        "res/johnston-itc/johnston-itc-std-medium.otf"
-    SOURCES
-        "NVT/nvt.hpp"
-        "NVT/thing.hpp"
-        "NVT/thing.cpp"
-)
-
 add_subdirectory(NVT/project)
 
 # qml module libs
 add_subdirectory(NVT/timeline)
 add_subdirectory(NVT/launch)
+
+add_subdirectory(NVT)
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an

@@ -1,6 +1,9 @@
 #pragma once
 
 #include "nvt.hpp"
+
+#include <project.hpp>
+#include <launch_window.hpp>
 #include "main_window.hpp"
 
 class nvt::application : public QGuiApplication {
@@ -13,9 +16,13 @@ public:
 
 private:
     void add_error(std::string str);
+    int launch_project(QString location);
 
-    QQmlApplicationEngine main_engine{};
+    QQmlApplicationEngine engine{};
 
     global* g = nullptr;
     std::optional<std::string> err = std::nullopt;
+
+    NVTLaunchWindow* launch_window = nullptr;
+    MainWindow* main_window = nullptr;
 };

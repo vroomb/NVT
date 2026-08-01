@@ -119,18 +119,27 @@ private:
 struct nvt::launch_details {
     std::string name{};
     fs::path location{};
-    int last_updated;
+    long long int last_updated;
 };
 
-class nvt::global {
-public:
-    __declspec(dllexport) static int open(fs::path location);
-    __declspec(dllexport) static int close();
-    __declspec(dllexport) static global* instance();
+const struct nvt::less_launch_details {
+    bool operator()(const launch_details& lhs, const launch_details& rhs) const {
+        return lhs.last_updated > rhs.last_updated;
+    }
+};
 
-    __declspec(dllexport) std::list<launch_details> launches();
-    __declspec(dllexport) void add_launch(launch_details ld);
-    __declspec(dllexport) void rem_launch(std::string location);
+class PROJECT_API nvt::global {
+public:
+    static int open(fs::path location);
+    static int close();
+    static global* instance();
+
+    std::set<launch_details, less_launch_details>* launches();
+    void add_launch(launch_details ld);
+    void rem_launch(std::string location);
+
+    bool has_errors();
+    std::string error_message();
 
 private:
     global(fs::path location);
@@ -139,22 +148,21 @@ private:
     static global* m_instance;
     fs::path m_location;
 
-    const struct less_launch_details {
-        bool operator()(const launch_details& lhs, const launch_details& rhs) const {
-            return lhs.last_updated > rhs.last_updated;
-        }
-    };
-
     std::set<launch_details, less_launch_details> m_launches{};
 
     nlohmann::json config_json;
+
+    std::optional<std::string> err = std::nullopt;
 };
 
-class nvt::project {
+class PROJECT_API nvt::story {
 public:
     static int open(fs::path location);
     static int close();
-    static project* instance();
+    static story* instance();
+
+    bool has_errors();
+    std::string error_message();
 
     std::string name();
     void setName(std::string name);
@@ -166,16 +174,20 @@ public:
     std::list<timeline> timelines(std::string search_text = "");
 
 private:
-    project(fs::path location);
-    ~project();
+    story(fs::path location);
+    ~story();
+
+    void add_error(std::string message);
 
     int setLocation(fs::path location);
 
-    static project* m_instance;
+    static story* m_instance;
 
     std::string m_name;
     fs::path m_location;
     fs::path m_config_dir;
 
     std::unique_ptr<SQLite::Database> db = nullptr;
+
+    std::optional<std::string> err = std::nullopt;
 };

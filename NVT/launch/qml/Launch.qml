@@ -13,7 +13,7 @@ Control {
     // ContextMenu.menu: MetroContextMenu {}
 
     property bool buttons_active_focus_on_tab: true
-    property real radius: 15
+    property real radius: 0
 
     signal launchRequested(location: string);
 
@@ -29,7 +29,7 @@ Control {
     contentItem: LaunchList {
         id: launchList
 
-        onLaunchRequested: root.launchRequested();
+        onLaunchRequested: location => root.launchRequested(location);
 
         projectListItem: projectList
         projectListComponent: StationLabel {

@@ -10,7 +10,7 @@ public:
     static void set_path_to_launch_list_file(std::string);
     static std::string path_to_launch_list_file();
 
-    LaunchHandle(nvt::launch_details& ld, QQmlComponent* component);
+    LaunchHandle(const nvt::launch_details ld, QQmlComponent* component);
 
     QString name() const {
         return m_name;

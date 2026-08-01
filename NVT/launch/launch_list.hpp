@@ -47,7 +47,7 @@ public:
 
     LaunchHandle* project(QString location);
 
-    void addProject(nvt::launch_details &ld);
+    void addProject(const nvt::launch_details ld);
 
     Q_INVOKABLE void reset();
 
@@ -58,7 +58,7 @@ public:
 
 signals:
     void launchLocationChanged();
-    void launchRequested();
+    void launchRequested(QString location);
     void projectListItemChanged();
     void projectListComponentChanged();
 

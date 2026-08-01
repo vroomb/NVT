@@ -5,19 +5,18 @@ import NVTModule
 import NVT.Timeline
 import NVT.Launch
 
-Window {
+MainWindow {
     id: root
-    visible: true
     visibility: Window.Maximized
     color: "#111"
 
     FontLoader {
         id: johnston_medium
-        source: "../../res/johnston-itc/johnston-itc-std-medium.otf"
+        source: "../res/johnston-itc/johnston-itc-std-medium.otf"
     }
     FontLoader {
         id: johnston_bold
-        source: "../../res/johnston-itc/johnston-itc-std-bold.otf"
+        source: "../res/johnston-itc/johnston-itc-std-bold.otf"
     }
 
     property font font
@@ -32,9 +31,5 @@ Window {
         id: contentFrame
         anchors.fill: parent
         font: parent.font
-    }
-
-    LaunchWindow {
-        visible: true
     }
 }

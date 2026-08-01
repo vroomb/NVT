@@ -1,4 +1,3 @@
-#include <project.hpp>
 #include "application.hpp"
 
 nvt::application::application(int& argc, char** argv) :
@@ -14,14 +13,19 @@ nvt::application::application(int& argc, char** argv) :
     }
     g = nvt::global::instance();
 
-    main_engine.loadFromModule("NVTModule", "Main");
-    if (main_engine.rootObjects().isEmpty() == true) {
-        add_error("nvt::application::main_engine was empty");
+    engine.loadFromModule("NVT.Launch", "LaunchWindow");
+    if (engine.rootObjects().isEmpty() == true) {
+        add_error("nvt::application::engine was empty");
         return;
     }
+
+    launch_window = qobject_cast<NVTLaunchWindow*>(engine.rootObjects()[0]);
+
+    connect(launch_window, &NVTLaunchWindow::launchRequested, this, &nvt::application::launch_project);
 }
 
 nvt::application::~application() {
+    nvt::story::close();
     nvt::global::close();
 }
 
@@ -38,4 +42,28 @@ std::string nvt::application::error_message() {
         return err.value();
     else
         return "";
+}
+
+int nvt::application::launch_project(QString location) {
+    int r = nvt::story::open(location.toStdString());
+
+    // if (r == 0) {
+
+    // } else {
+
+    // }
+
+    launch_window->deleteLater();
+    launch_window = nullptr;
+
+    engine.loadFromModule("NVTModule", "Main");
+
+    auto m = engine.rootObjects();
+    auto m2 = engine.children();
+
+    main_window = qobject_cast<MainWindow*>(engine.rootObjects().back());
+
+    if (main_window->isVisible() == false) main_window->show();
+
+    return r;
 }

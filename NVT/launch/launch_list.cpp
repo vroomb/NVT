@@ -69,10 +69,10 @@ void LaunchList::createProject(QString name, QString location) {
 
     g->add_launch(ld);
 
-    reset();
+    emit launchRequested(location);
 }
 
-void LaunchList::addProject(nvt::launch_details& ld) {
+void LaunchList::addProject(const nvt::launch_details ld) {
     auto h = new LaunchHandle{ ld, projectListComponent() };
     h->setParent(projectListItem());
     m_handles.insert(h);
@@ -82,8 +82,11 @@ void LaunchList::reset() {
     for (auto i : m_handles) delete i;
     m_handles.clear();
 
-    auto g = nvt::global::instance();
-    for (auto &i : g->launches()) addProject(i);
+    auto s = nvt::global::instance()->launches();
+
+    for (auto i = s->begin(); i != s->end(); i++) {
+        addProject(*i);
+    }
 }
 
 QString LaunchList::launchLocation() {

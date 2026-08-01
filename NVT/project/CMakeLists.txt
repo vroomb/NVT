@@ -8,6 +8,7 @@ add_library(projectlib SHARED
 	"project.cpp"
 )
 
+target_compile_definitions(projectlib PRIVATE PROJECTLIB)
 set_target_properties(projectlib PROPERTIES CXX_STANDARD 23)
 target_link_libraries(projectlib
 PUBLIC

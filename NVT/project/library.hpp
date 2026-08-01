@@ -7,6 +7,7 @@
 #include <fstream>
 #include <filesystem>
 #include <variant>
+#include <optional>
 
 namespace nvt {
 
@@ -18,8 +19,16 @@ namespace nvt {
     class event_chain;
     class timeline;
     struct launch_details;
+    struct less_launch_details;
     class global;
-    class project;
+    class story;
 
     void log(std::string);
 }
+
+#if defined(PROJECTLIB)
+#  define PROJECT_API __declspec(dllexport)
+#else
+#  define PROJECT_API __declspec(dllimport)
+#endif
+
