@@ -1,5 +1,6 @@
 #include "launch_list.hpp"
 #include "launch_handle.hpp"
+#include <project/global.hpp>
 
 void nvt::log(std::string str) {
     std::ofstream o(data_dir"log.txt", std::ios::app);

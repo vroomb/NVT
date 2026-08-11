@@ -1,9 +1,9 @@
 #pragma once
 
-#include "nvt.hpp"
+#include <project/project.hpp>
+#include <launch/launch_window.hpp>
 
-#include <project.hpp>
-#include <launch_window.hpp>
+#include "nvt.hpp"
 #include "main_window.hpp"
 
 class nvt::application : public QGuiApplication {

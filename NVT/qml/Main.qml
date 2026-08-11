@@ -30,6 +30,9 @@ MainWindow {
     Timeline {
         id: contentFrame
         anchors.fill: parent
-        font: parent.font
+    }
+
+    Component.onCompleted: {
+        contentFrame.font = this.font
     }
 }

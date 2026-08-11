@@ -1,4 +1,3 @@
-#include <project.hpp>
 #include "application.hpp"
 
 void nvt::log(std::string str) {

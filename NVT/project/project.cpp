@@ -4,141 +4,25 @@ namespace cr = std::chrono;
 using time_point = cr::time_point<cr::steady_clock>;
 using seconds = cr::seconds;
 
-#ifdef    PROJECTLIB
-nvt::global* nvt::global::m_instance = nullptr;
-nvt::story* nvt::story::m_instance = nullptr;
-#endif // PROJECTLIB
+// nvt::abstract_story_entry::entry_type nvt::abstract_story_entry::discern_type(fs::path location) {
+// 
+// }
 
-int nvt::global::open(fs::path location) {
-    if (m_instance != nullptr) {
-        std::cout << "don't instantiate global twice.\n";
-        return -1;
-    }
-
-    m_instance = new global(location);
-    return 0;
-}
-
-nvt::global::global(fs::path location) :
-    m_location{ location }
+nvt::story_entry::story_entry(fs::path location) :
+    m_location{location}
 {
-    auto stream = std::ifstream(location.string() + "config.json");
-    config_json = nlohmann::json::parse(stream);
-
-    if (stream.is_open() == true) {
-
-        auto j = config_json["projects"];
-
-        if (j.is_array() == true) {
-            for (auto i : j) {
-                if ((i["name"].is_string() == true) &&
-                    (i["location"].is_string() == true)) {
-                    if (i["last updated"].is_number_unsigned() == true)
-                        m_launches.insert(nvt::launch_details{
-                            i["name"],
-                            i["location"],
-                            i["last updated"]
-                        });
-                    else
-                        m_launches.insert(nvt::launch_details{
-                            i["name"],
-                            i["location"],
-                            0
-                        });
-                }
-            }
-        }
-    }
+    if (fs::is_regular_file(m_location)) read();
+    else if (fs::exists(m_location))
+        throw std::runtime_error("abstract story entry exists, but is not a regular file??");
+    else write();
 }
 
-nvt::global* nvt::global::instance() {
-    return m_instance;
+int nvt::story_entry::write(std::string file_contents) {
+    int r = 0;
+
+    file_contents;
+
+    std::ofstream f{ m_location, std::ios::out | std::ios::trunc };
+
+    return r;
 }
-
-std::set<nvt::launch_details, nvt::less_launch_details>* nvt::global::launches() {
-    return &m_launches;
-}
-
-void nvt::global::add_launch(launch_details ld) {
-    config_json["projects"] += {
-        { "name",         ld.name         },
-        { "location",     ld.location     },
-        { "last updated", ld.last_updated }
-    };
-
-    m_launches.insert(ld);
-
-    if (fs::directory_entry(ld.location).exists() == false) {
-        std::error_code ec{};
-        if (fs::create_directory(ld.location, ec) == false)
-            std::cout << "story directory not created: " << ec << "\n";
-    }
-
-    std::ofstream(m_location / "config.json",
-        std::ios::out | std::ios::trunc) << config_json.dump(2);
-}
-
-void nvt::global::rem_launch(std::string location) {
-    for (auto& i : config_json["projects"]) if (i["location"] == location)
-            i = nullptr;
-
-    std::ofstream(m_location / "config.json",
-        std::ios::out | std::ios::trunc) << config_json.dump(2);
-}
-
-int nvt::global::close() {
-    if (m_instance == nullptr) {
-        return -1;
-    } else {
-        delete m_instance;
-        return 0;
-    }
-}
-
-nvt::global::~global() {}
-
-int nvt::story::open(fs::path location) {
-    if (m_instance != nullptr) {
-        std::cout << "don't instantiate story twice.\n";
-        return -1;
-    }
-
-    m_instance = new story(location);
-    return 0;
-}
-
-nvt::story::story(fs::path location) :
-    m_location{ location },
-    m_config_dir{ location / ".nvt" }
-{
-    if (fs::directory_entry(m_config_dir).exists() == false) {
-        std::error_code ec{};
-        if (fs::create_directory(m_config_dir, ec) == false)
-            std::cout << "story directory not created: " << ec << "\n";
-    }
-
-    db = std::make_unique<SQLite::Database>((m_config_dir / "db.db").string(),
-        SQLite::OPEN_CREATE | SQLite::OPEN_READWRITE
-    );
-
-    m_name = location.filename().string();
-}
-
-nvt::story* nvt::story::instance() {
-    return m_instance;
-}
-
-std::string nvt::story::name() {
-    return m_name;
-}
-
-int nvt::story::close() {
-    if (m_instance == nullptr) {
-        return -1;
-    } else {
-        delete m_instance;
-        return 0;
-    }
-}
-
-nvt::story::~story() {}

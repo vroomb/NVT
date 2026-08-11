@@ -1,4 +1,6 @@
 #include "application.hpp"
+#include <project/global.hpp>
+#include <project/story.hpp>
 
 nvt::application::application(int& argc, char** argv) :
     QGuiApplication(argc, argv)

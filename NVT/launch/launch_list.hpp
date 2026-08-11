@@ -1,7 +1,7 @@
 #pragma once
 
 #include "launch.hpp"
-#include <project.hpp>
+#include <project/project.hpp>
 #include <QUrl>
 
 namespace cr = std::chrono;

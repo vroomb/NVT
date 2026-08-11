@@ -38,4 +38,5 @@ qt_add_qml_module(appNVT
     SOURCES
         main_window.hpp
         main_window.cpp
+        QML_FILES qml/SuggestionPopup.qml
 )

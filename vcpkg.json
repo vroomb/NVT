@@ -1,6 +1,7 @@
 {
   "dependencies": [
     "nlohmann-json",
-    "sqlitecpp"
+    "yaml-cpp",
+    "lmdb"
   ]
 }

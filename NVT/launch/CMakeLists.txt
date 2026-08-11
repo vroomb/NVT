@@ -1,7 +1,5 @@
 include("C:/Program Files/Microsoft Visual Studio/18/Community/VC/vcpkg/scripts/buildsystems/vcpkg.cmake")
 
-find_package(SQLiteCpp CONFIG REQUIRED)
-
 qt_add_library(launchlib SHARED)
 
 set_target_properties(launchlib
@@ -12,8 +10,7 @@ set_target_properties(launchlib
 
 target_compile_definitions(launchlib PRIVATE LAUNCHLIB)
 
-target_include_directories(launchlib PUBLIC ../project)
-target_include_directories(launchlib PUBLIC .)
+target_include_directories(launchlib PUBLIC ..)
 
 target_link_libraries(launchlib
     PRIVATE Qt6::Quick

@@ -7,7 +7,7 @@
 #include <nlohmann/json.hpp>
 #include <format>
 #include <chrono>
-#include <project.hpp>
+#include <project/project.hpp>
 
 #if defined(LAUNCHLIB)
 #  define LAUNCH_API Q_DECL_EXPORT

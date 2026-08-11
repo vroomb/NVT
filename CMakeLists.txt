@@ -35,7 +35,7 @@ set_target_properties(appNVT PROPERTIES
     WIN32_EXECUTABLE TRUE
 )
 
-target_include_directories(appNVT PRIVATE NVT/project)
+target_include_directories(appNVT PRIVATE NVT)
 # 
 # target_include_directories(timelinelib PRIVATE NVT/project)
 # target_link_libraries(timelinelib PRIVATE projectlib)
